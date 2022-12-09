@@ -21,10 +21,8 @@ public static class ServiceCollectionExtensions
         services.AddEndpointsApiExplorer();
         services.AddSwaggerGen(setup =>
         {
-            // setup.OperationFilter<ApiVersionOperationFilter>();
             setup.SwaggerDoc("v1", new OpenApiInfo
             {
-                Description = "Minimal APIs are a simplified approach for building fast HTTP APIs with ASP.NET Core. You can build fully functioning REST endpoints with minimal code and configuration.",
                 Title = "Exchange API",
                 Version = "v1",
                 Contact = new OpenApiContact
