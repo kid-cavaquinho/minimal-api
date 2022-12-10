@@ -2,7 +2,7 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{1B6F135C-3D84-4369-BCC7-E250BCB41F69}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Exchange.API", "src\Exchange.API\Exchange.API.csproj", "{A930A43B-16D2-407E-A8AD-EC2ABFD53557}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Exchange.Api", "src\Exchange.Api\Exchange.Api.csproj", "{A930A43B-16D2-407E-A8AD-EC2ABFD53557}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Exchange.Domain", "src\Exchange.Domain\Exchange.Domain.csproj", "{71F4E1BF-B638-4A9F-B186-E73ADA3E10DA}"
 EndProject
@@ -15,6 +15,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		README.md = README.md
 		Dockerfile = Dockerfile
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Exchange.Domain.UnitTests", "tst\Exchange.Domain.UnitTests\Exchange.Domain.UnitTests.csproj", "{7A32B5B5-60F0-43EB-AD24-BBF21C1E3CED}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Exchange.Infrastructure.UnitTests", "tst\Exchange.Infrastructure.UnitTests\Exchange.Infrastructure.UnitTests.csproj", "{D518B577-732E-4DC2-B76E-7628BD40693A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Exchange.Api.IntegrationTests", "tst\Exchange.Api.IntegrationTests\Exchange.Api.IntegrationTests.csproj", "{317C8917-A951-4D9A-93E1-D2B0339AC222}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -34,10 +40,25 @@ Global
 		{9F5D95C2-A60A-4E61-9487-10A6F3134DDE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9F5D95C2-A60A-4E61-9487-10A6F3134DDE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9F5D95C2-A60A-4E61-9487-10A6F3134DDE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7A32B5B5-60F0-43EB-AD24-BBF21C1E3CED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7A32B5B5-60F0-43EB-AD24-BBF21C1E3CED}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7A32B5B5-60F0-43EB-AD24-BBF21C1E3CED}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7A32B5B5-60F0-43EB-AD24-BBF21C1E3CED}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D518B577-732E-4DC2-B76E-7628BD40693A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D518B577-732E-4DC2-B76E-7628BD40693A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D518B577-732E-4DC2-B76E-7628BD40693A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D518B577-732E-4DC2-B76E-7628BD40693A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{317C8917-A951-4D9A-93E1-D2B0339AC222}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{317C8917-A951-4D9A-93E1-D2B0339AC222}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{317C8917-A951-4D9A-93E1-D2B0339AC222}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{317C8917-A951-4D9A-93E1-D2B0339AC222}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{A930A43B-16D2-407E-A8AD-EC2ABFD53557} = {1B6F135C-3D84-4369-BCC7-E250BCB41F69}
 		{71F4E1BF-B638-4A9F-B186-E73ADA3E10DA} = {1B6F135C-3D84-4369-BCC7-E250BCB41F69}
 		{9F5D95C2-A60A-4E61-9487-10A6F3134DDE} = {1B6F135C-3D84-4369-BCC7-E250BCB41F69}
+		{7A32B5B5-60F0-43EB-AD24-BBF21C1E3CED} = {69F9789D-0CB6-4D40-9CC6-7800FA45CAC2}
+		{D518B577-732E-4DC2-B76E-7628BD40693A} = {69F9789D-0CB6-4D40-9CC6-7800FA45CAC2}
+		{317C8917-A951-4D9A-93E1-D2B0339AC222} = {69F9789D-0CB6-4D40-9CC6-7800FA45CAC2}
 	EndGlobalSection
 EndGlobal
