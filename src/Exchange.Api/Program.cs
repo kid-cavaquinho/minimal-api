@@ -1,4 +1,4 @@
-using System.Net;
+using System.ComponentModel.DataAnnotations;
 using System.Net.Mime;
 using Exchange.API;
 using Exchange.API.Middlewares;
@@ -64,3 +64,6 @@ app.MapGet("quotes/{cryptocurrencyCode:required}", async ([FromRoute] string cry
 
 await app.RunAsync(app.Lifetime.ApplicationStopped);
 
+// To enable integration tests with `WebApplicationFactory`
+// https://learn.microsoft.com/en-us/aspnet/core/test/integration-tests?view=aspnetcore-7.0#basic-tests-with-the-default-webapplicationfactory
+public partial class Program { }
