@@ -9,13 +9,13 @@ public class MetadataEndpointTests
 {
     private readonly WebApplicationFactory<Program> _factory;
 
-    public MetadataEndpointTests(WebApplicationFactory<Program> factory)
+    public MetadataEndpointTests()
     {
-        _factory = factory;
+        _factory = new WebApplicationFactory<Program>();
     }
     
     [Fact]
-    public async Task Quote_Should_Return_200()
+    public async Task Metadata_Should_Return_200()
     {
         using var client = _factory.CreateClient();
         var response = await client.GetAsync("/metadata?cryptocurrencyCodes=wtf");
@@ -23,7 +23,7 @@ public class MetadataEndpointTests
     }
     
     [Fact]
-    public async Task Quote_Should_Return_400()
+    public async Task Metadata_Should_Return_400()
     {
         // https://learn.microsoft.com/en-us/aspnet/core/test/integration-tests?view=aspnetcore-7.0#inject-mock-services
         using var client = _factory.CreateClient();
