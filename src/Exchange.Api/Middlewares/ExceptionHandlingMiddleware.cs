@@ -1,5 +1,4 @@
-﻿using System.Net;
-using System.Text.Json;
+﻿using System.Text.Json;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Exchange.API.Middlewares;
@@ -31,7 +30,7 @@ public class ExceptionHandlingMiddleware : IMiddleware
             {
                 default:
                     response.Title = "Internal server error";
-                    response.Status = (int)HttpStatusCode.InternalServerError;
+                    response.Status = StatusCodes.Status500InternalServerError;
                     response.Type = "https://tools.ietf.org/html/rfc7231#section-6.6.1";
                     break;
             }
