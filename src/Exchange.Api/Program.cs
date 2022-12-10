@@ -7,6 +7,7 @@ using Exchange.Domain.Interfaces;
 using Exchange.Infrastructure;
 using Exchange.Infrastructure.Options;
 using Exchange.Infrastructure.Services;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 
@@ -60,7 +61,7 @@ app.MapGet("quotes/{cryptocurrencyCode:required}", async ([FromRoute] string cry
     {
         Summary = "Returns the latest quotes in a submitted cryptocurrency code for USD, EUR, BRL, GBP and AUD"
     })
-    .Produces((int)HttpStatusCode.OK, typeof(CryptoCurrencyQuote), MediaTypeNames.Application.Json);
+    .Produces(StatusCodes.Status200OK, typeof(CryptoCurrencyQuote), MediaTypeNames.Application.Json);
 
 await app.RunAsync(app.Lifetime.ApplicationStopped);
 
