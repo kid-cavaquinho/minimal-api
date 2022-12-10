@@ -6,6 +6,8 @@ minimal-api
 This sample project demonstrates techniques you can use for integration testing
 an ASP.NET Core 7 web application that uses the new [minimal APIs] feature.
 
+Minimal APIs are a simplified approach for building fast HTTP APIs with ASP.NET Core. You can build fully functioning REST endpoints with minimal code and configuration.
+
 [minimal APIs]: https://devblogs.microsoft.com/aspnet/asp-net-core-updates-in-net-6-preview-4/#introducing-minimal-apis
 
 The sample application implements two endpoints: 
