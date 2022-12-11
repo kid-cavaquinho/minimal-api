@@ -3,8 +3,8 @@ minimal-api
 
 ## Introduction
 
-This sample project demonstrates techniques you can use for integration testing
-an ASP.NET Core 7 web application that uses the new [minimal APIs] feature.
+This sample project is build using the [minimal APIs] feature approach and demonstrates techniques you can use for integration testing
+an ASP.NET Core 7 web application.
 
 Minimal APIs are a simplified approach for building fast HTTP APIs with ASP.NET Core. You can build fully functioning REST endpoints with minimal code and configuration.
 
@@ -76,6 +76,7 @@ docker run --rm --detach --name exchange-api
 
 ## Todo
 * Use default interface methods (C# version 8 feature)
+* Use `Span<T>` (C# version 7.2 feature)
 * Add cache to `ExchangeRatesService` class 
 * Modify cache results (currently caches the HTTP byte[] response) on `CoinMarketCapService` to avoid allocations and improve performance
 * Benchmark
