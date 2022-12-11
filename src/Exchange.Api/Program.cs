@@ -1,6 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.Net.Mime;
 using Exchange.API;
+using Exchange.API.Extensions;
 using Exchange.API.Middlewares;
 using Exchange.Domain;
 using Exchange.Domain.Interfaces;
@@ -10,14 +11,14 @@ using Exchange.Infrastructure.Services;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
+using Serilog;
 
-var builder = WebApplication.CreateBuilder(args);
+var builder = WebApplication.CreateBuilder(args).UseSerilog();
 
 builder.Services.AddSwagger();
 builder.Services.AddDistributedMemoryCache();
 builder.Services.AddTransient<ExceptionHandlingMiddleware>();
 builder.Services.AddInfrastructure();
-builder.AddSerilog();
 
 var app = builder.Build();
 if (app.Environment.IsDevelopment())
