@@ -28,20 +28,22 @@ app.UseHttpsRedirection();
 app.UseMetadataEndpoint();
 app.UseQuotesEndpoint();
 
+var logger = new LoggerConfiguration().ReadFrom.Configuration(builder.Configuration).CreateLogger();
+
 try
 {
-    Log.Information("Starting host");
+    logger.Information("Starting host");
     await app.RunAsync(app.Lifetime.ApplicationStopped);
     return 0;
 }
-catch (Exception ex)
+catch (Exception exception)
 {
-    Log.Fatal(ex, "Host terminated unexpectedly");
+    logger.Fatal(exception, "Host terminated unexpectedly");
     return 1;
 }
 finally
 {
-    Log.CloseAndFlush();
+    await logger.DisposeAsync();
 }
 
 // To enable integration tests with `WebApplicationFactory`
