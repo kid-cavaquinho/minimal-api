@@ -30,10 +30,9 @@ public class ExchangeRatesService : IExchangeService
     {
         var requestUri = $"{_options.BaseAddress}exchangerates_data/latest?symbols={string.Join(",", (Currency[]) Enum.GetValues(typeof(Currency)))}&base={currencySymbol}";
         var httpRequestMessage = new HttpRequestMessage(HttpMethod.Get, requestUri);
-
         ExchangeRateLiveResponse? exchangeRateResponse = null;
-
         var response = await SendAsync(httpRequestMessage, cancellationToken);
+        
         try
         {
             exchangeRateResponse = await JsonSerializer.DeserializeAsync<ExchangeRateLiveResponse>(new MemoryStream(response), JsonSerializerOptions.Default, cancellationToken);
@@ -52,6 +51,7 @@ public class ExchangeRatesService : IExchangeService
     private async Task<byte[]> SendAsync(HttpRequestMessage httpRequestMessage, CancellationToken cancellationToken = default)
     {
         HttpResponseMessage? response = null;
+        
         try
         {
             response = await _httpClient.SendAsync(httpRequestMessage, cancellationToken);

@@ -38,7 +38,7 @@ public class ExchangeRatesServiceTests
             .ReturnsAsync(new HttpResponseMessage
             {
                 StatusCode = HttpStatusCode.OK,
-                Content = new StringContent("{}")
+                Content = new StringContent("deserialization will fail")
             }).Verifiable();
         var httpClient = new HttpClient(_httpMessageHandlerMock.Object);
         _httpClientFactoryMock.Setup(_ => _.CreateClient(nameof(ExchangeRatesService))).Returns(httpClient).Verifiable();
@@ -134,5 +134,15 @@ public class ExchangeRatesServiceTests
         actual.Should().NotBeNull();
         actual.As<CryptoCurrencyQuote>().CryptoCurrencyCode.Should().Be(CryptoCurrencyCode);
         actual.As<CryptoCurrencyQuote>().Quotes.Should().HaveCount(0);
+    }
+
+    [Fact]
+    public async Task GetInfoAsync_Should_Throw_Not_Implemented_Exception()
+    {
+        var httpClient = new HttpClient(_httpMessageHandlerMock.Object);
+        _httpClientFactoryMock.Setup(_ => _.CreateClient(nameof(ExchangeRatesService))).Returns(httpClient).Verifiable();
+        var target = new ExchangeRatesService(_httpClientFactoryMock.Object, _options, new NullLogger<ExchangeRatesService>());
+        Func<Task> act = async () => { await target.GetInfoAsync(It.IsAny<string[]>(), It.IsAny<CancellationToken>()); };
+        await act.Should().ThrowAsync<NotImplementedException>();
     }
 }
