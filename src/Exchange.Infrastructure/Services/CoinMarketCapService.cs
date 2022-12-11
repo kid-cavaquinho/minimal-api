@@ -37,7 +37,7 @@ public sealed class CoinMarketCapService : IExchangeService
         return response?.CryptocurrenciesMetadata?.Select(m => new Metadata(m.Value.First().Id, m.Value.First().Symbol));
     }
 
-    public async Task<CryptoCurrencyQuote> GetQuotesAsync(string cryptoCurrencyCode, CancellationToken cancellationToken = default)
+    public async Task<CryptoCurrencyQuote?> GetQuotesAsync(string cryptoCurrencyCode, CancellationToken cancellationToken = default)
     {
         var metadata = await GetInfoAsync(new[] { cryptoCurrencyCode }, cancellationToken);
 

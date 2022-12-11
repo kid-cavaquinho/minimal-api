@@ -10,7 +10,7 @@ internal class ExchangeServiceStub : IExchangeService
         throw new NotImplementedException();
     }
 
-    public async Task<CryptoCurrencyQuote> GetQuotesAsync(string cryptoCurrencyCode, CancellationToken cancellationToken = default)
+    public async Task<CryptoCurrencyQuote?> GetQuotesAsync(string cryptoCurrencyCode, CancellationToken cancellationToken = default)
     {
         var fakeQuotes = new List<Quote>
         {
