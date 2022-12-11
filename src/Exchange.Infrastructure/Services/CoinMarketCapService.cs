@@ -91,16 +91,6 @@ public sealed class CoinMarketCapService : IExchangeService
         {
             response.EnsureSuccessStatusCode();
         }
-        catch (NotSupportedException notSupportedException)
-        {
-            _logger.LogError(notSupportedException, "Not supported exception was thrown while executing the request: {RequestUri}",
-                httpRequestMessage.RequestUri);
-        }
-        catch (JsonException jsonException)
-        {
-            _logger.LogError(jsonException, "Json exception was thrown while executing the request: {RequestUri}",
-                httpRequestMessage.RequestUri);
-        }
         catch (HttpRequestException httpRequestException)
         {
             _logger.LogError(httpRequestException, "Http request exception was thrown while executing the request: {RequestUri}",
