@@ -8,7 +8,6 @@ using Serilog;
 var builder = WebApplication.CreateBuilder(args).UseSerilog();
 
 builder.Services.AddSwagger();
-builder.Services.AddDistributedMemoryCache();
 builder.Services.AddMiddleware();
 builder.Services.AddInfrastructure();
 

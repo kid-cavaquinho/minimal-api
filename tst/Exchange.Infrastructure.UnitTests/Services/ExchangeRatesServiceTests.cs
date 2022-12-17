@@ -41,9 +41,10 @@ public class ExchangeRatesServiceTests
                 Content = new StringContent("deserialization will fail")
             }).Verifiable();
         var httpClient = new HttpClient(_httpMessageHandlerMock.Object);
+        httpClient.BaseAddress = _options.Value.BaseAddress;
         _httpClientFactoryMock.Setup(_ => _.CreateClient(nameof(ExchangeRatesService))).Returns(httpClient).Verifiable();
 
-        var target = new ExchangeRatesService(_httpClientFactoryMock.Object, _options, new NullLogger<ExchangeRatesService>());
+        var target = new ExchangeRatesService(new NullLogger<ExchangeRatesService>(), _httpClientFactoryMock.Object);
 
         var actual = await target.GetQuotesAsync(CryptoCurrencyCode);
 
@@ -63,9 +64,10 @@ public class ExchangeRatesServiceTests
                 Content = new StringContent("{\n  \"base\": \"TST\",\n  \"date\": \"2022-12-11\",\n  \"success\": true,\n  \"timestamp\": 1670796483\n}")
             }).Verifiable();
         var httpClient = new HttpClient(_httpMessageHandlerMock.Object);
+        httpClient.BaseAddress = _options.Value.BaseAddress;
         _httpClientFactoryMock.Setup(_ => _.CreateClient(nameof(ExchangeRatesService))).Returns(httpClient).Verifiable();
 
-        var target = new ExchangeRatesService(_httpClientFactoryMock.Object, _options, new NullLogger<ExchangeRatesService>());
+        var target = new ExchangeRatesService(new NullLogger<ExchangeRatesService>(), _httpClientFactoryMock.Object);
 
         var actual = await target.GetQuotesAsync(CryptoCurrencyCode);
 
@@ -84,9 +86,10 @@ public class ExchangeRatesServiceTests
                 StatusCode = HttpStatusCode.ServiceUnavailable,
             }).Verifiable();
         var httpClient = new HttpClient(_httpMessageHandlerMock.Object);
+        httpClient.BaseAddress = _options.Value.BaseAddress;
         _httpClientFactoryMock.Setup(_ => _.CreateClient(nameof(ExchangeRatesService))).Returns(httpClient).Verifiable();
 
-        var target = new ExchangeRatesService(_httpClientFactoryMock.Object, _options, new NullLogger<ExchangeRatesService>());
+        var target = new ExchangeRatesService(new NullLogger<ExchangeRatesService>(), _httpClientFactoryMock.Object);
 
         var actual = await target.GetQuotesAsync(CryptoCurrencyCode);
 
@@ -106,9 +109,10 @@ public class ExchangeRatesServiceTests
                 Content = new StringContent("{\n  \"base\": \"BTC\",\n  \"date\": \"2022-12-11\",\n  \"rates\": {\n    \"AUD\": 25222.834753,\n    \"BRL\": 89699.792225,\n    \"EUR\": 16256.868149,\n    \"GBP\": 13962.367343,\n    \"USD\": 17124.8407\n  },\n  \"success\": true,\n  \"timestamp\": 1670796483\n}"),
             }).Verifiable();
         var httpClient = new HttpClient(_httpMessageHandlerMock.Object);
+        httpClient.BaseAddress = _options.Value.BaseAddress;
         _httpClientFactoryMock.Setup(_ => _.CreateClient(nameof(ExchangeRatesService))).Returns(httpClient).Verifiable();
 
-        var target = new ExchangeRatesService(_httpClientFactoryMock.Object, _options, new NullLogger<ExchangeRatesService>());
+        var target = new ExchangeRatesService(new NullLogger<ExchangeRatesService>(), _httpClientFactoryMock.Object);
 
         var actual = await target.GetQuotesAsync(CryptoCurrencyCode);
 
@@ -125,9 +129,10 @@ public class ExchangeRatesServiceTests
             .ThrowsAsync(new TaskCanceledException())
             .Verifiable();
         var httpClient = new HttpClient(_httpMessageHandlerMock.Object);
+        httpClient.BaseAddress = _options.Value.BaseAddress;
         _httpClientFactoryMock.Setup(_ => _.CreateClient(nameof(ExchangeRatesService))).Returns(httpClient).Verifiable();
 
-        var target = new ExchangeRatesService(_httpClientFactoryMock.Object, _options, new NullLogger<ExchangeRatesService>());
+        var target = new ExchangeRatesService(new NullLogger<ExchangeRatesService>(), _httpClientFactoryMock.Object);
 
         var actual = await target.GetQuotesAsync(CryptoCurrencyCode);
 
@@ -141,7 +146,7 @@ public class ExchangeRatesServiceTests
     {
         var httpClient = new HttpClient(_httpMessageHandlerMock.Object);
         _httpClientFactoryMock.Setup(_ => _.CreateClient(nameof(ExchangeRatesService))).Returns(httpClient).Verifiable();
-        var target = new ExchangeRatesService(_httpClientFactoryMock.Object, _options, new NullLogger<ExchangeRatesService>());
+        var target = new ExchangeRatesService(new NullLogger<ExchangeRatesService>(), _httpClientFactoryMock.Object);
         Func<Task> act = async () => { await target.GetInfoAsync(It.IsAny<string[]>(), It.IsAny<CancellationToken>()); };
         await act.Should().ThrowAsync<NotImplementedException>();
     }
