@@ -16,15 +16,14 @@ public static class QuotesEndpoint
                 [FromServices] IOptions<ApiOptions> options,
                 CancellationToken cancellationToken) =>
             {
-                var service = serviceResolver(options.Value.Default);
-                var result = await service.GetQuotesAsync(cryptocurrencyCode, cancellationToken);
+                var result = await serviceResolver(options.Value.Default).GetQuotesAsync(cryptocurrencyCode, cancellationToken);
                 return TypedResults.Ok(result);
             })
             .WithTags("Quotes")
             .WithName("Quotes")
             .WithOpenApi(operation => new(operation)
             {
-                Summary = "Returns the latest quotes in a submitted cryptocurrency code for USD, EUR, BRL, GBP and AUD"
+                Summary = "Returns the latest quotes in a submitted cryptocurrency code for USD, EUR, BRL, GBP and AUD currencies"
             })
             .Produces(StatusCodes.Status200OK, typeof(CryptoCurrencyQuote), MediaTypeNames.Application.Json);
     }
