@@ -52,7 +52,11 @@ public static class ServiceCollectionExtensions
             httpClient.BaseAddress = coinMarketCapOptions.BaseAddress;
             httpClient.DefaultRequestHeaders.Add(HeaderNames.AcceptEncoding, "deflate, gzip");
             httpClient.DefaultRequestHeaders.Add(HeaderNames.Accept, MediaTypeNames.Application.Json);
-            httpClient.DefaultRequestHeaders.TryAddWithoutValidation("X-CMC_PRO_API_KEY", coinMarketCapOptions.Key);
+            // The HttpHeaders.TryAddWithoutValidation returns false if the key is null/empty OR it's in the list of invalid headers.
+            // The Add method throws exceptions instead of returning false by calls the method ParseAndAddValue.
+            // Internally it gets a parser for each key you try to add and only accepts the value if the parse is successful
+            // (checking if the key you're trying to add is valid for that kind of request, for example).
+            httpClient.DefaultRequestHeaders.Add("X-CMC_PRO_API_KEY", coinMarketCapOptions.Key);
         }).ConfigurePrimaryHttpMessageHandler(() => new HttpClientHandler
         {
             AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate
@@ -64,7 +68,7 @@ public static class ServiceCollectionExtensions
             httpClient.BaseAddress = exchangeRatesOptions.BaseAddress;
             httpClient.DefaultRequestHeaders.Add(HeaderNames.Accept, MediaTypeNames.Application.Json);
             httpClient.DefaultRequestHeaders.Add(HeaderNames.AcceptEncoding, "deflate, gzip");
-            httpClient.DefaultRequestHeaders.TryAddWithoutValidation("apikey", exchangeRatesOptions.Key);
+            httpClient.DefaultRequestHeaders.Add("apikey", exchangeRatesOptions.Key);
         }).ConfigurePrimaryHttpMessageHandler(() => new HttpClientHandler
         {
             AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate
