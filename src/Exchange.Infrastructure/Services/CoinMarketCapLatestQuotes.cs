@@ -3,7 +3,7 @@ using System.Text.Json.Serialization;
 
 namespace Exchange.Infrastructure.Services;
 
-public sealed class CoinMarketCapQuotesLatestResponse
+public sealed class CoinMarketCapLatestQuotes
 {
     [JsonPropertyName("status")] 
     public CoinMarketCapStatus? Status { get; set; }
