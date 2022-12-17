@@ -1,4 +1,5 @@
-﻿using Microsoft.OpenApi.Models;
+﻿using Exchange.API.Middlewares;
+using Microsoft.OpenApi.Models;
 using Serilog;
 using Serilog.Enrichers;
 
@@ -23,5 +24,10 @@ public static class ServiceCollectionExtensions
                 }
             });
         });
+    }
+
+    internal static void AddMiddleware(this IServiceCollection services)
+    {
+        services.AddTransient<ExceptionHandlingMiddleware>();
     }
 }

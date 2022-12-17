@@ -9,7 +9,7 @@ var builder = WebApplication.CreateBuilder(args).UseSerilog();
 
 builder.Services.AddSwagger();
 builder.Services.AddDistributedMemoryCache();
-builder.Services.AddTransient<ExceptionHandlingMiddleware>();
+builder.Services.AddMiddleware();
 builder.Services.AddInfrastructure();
 
 var app = builder.Build();
