@@ -27,28 +27,27 @@ public sealed class CoinMarketCapService : HttpService, IExchangeService
 
         var coinMarketCapCryptoCurrencyId = metadata.First().CurrencyId;
         
-        var currencies = new[] 
+        var coinMarketCapCurrencies = new[] 
         { 
-            CoinMarketCapCurrencyId.Aud, 
+            CoinMarketCapCurrencyId.Aud,
             CoinMarketCapCurrencyId.Eur, 
             CoinMarketCapCurrencyId.Blr, 
             CoinMarketCapCurrencyId.Gbp, 
             CoinMarketCapCurrencyId.Usd 
         };
 
-        var tasks = currencies.Select(currency => GetQuotePriceAsync(coinMarketCapCryptoCurrencyId, currency, cancellationToken));
+        var tasks = coinMarketCapCurrencies.Select(convertCurrency => GetQuotePriceAsync(coinMarketCapCryptoCurrencyId, convertCurrency, cancellationToken));
         var quotePrices = await Task.WhenAll(tasks);
 
-        return new CryptoCurrencyQuote(cryptoCurrencyCode, quotePrices.Select(s => new Quote(s.Item1, s.Item2)));
+        return new CryptoCurrencyQuote(cryptoCurrencyCode, quotePrices.Select(s => new Quote(s.currency, s.quote)));
     }
 
-    private async Task<(string, decimal?)> GetQuotePriceAsync(int currencyId, (int, string) convertId, CancellationToken cancellationToken = default)
+    private async Task<(string currency, decimal? quote)> GetQuotePriceAsync(int currencyId, (int Id, string Name) convertCurrency, CancellationToken cancellationToken = default)
     {
-        var requestUri = $"v2/cryptocurrency/quotes/latest?id={currencyId}&convert_id={convertId.Item1}";
+        var requestUri = $"v2/cryptocurrency/quotes/latest?id={currencyId}&convert_id={convertCurrency.Id}";
         var httpRequestMessage = new HttpRequestMessage(HttpMethod.Get, requestUri);
         var result = await SendAsync<CoinMarketCapLatestQuotes>(httpRequestMessage, cancellationToken);
-        var quotePrice = result?.Data?[currencyId.ToString()]?["quote"]![convertId.Item1.ToString()]?["price"]?.GetValue<decimal>();
-        // var lastUpdated = result?.Data?[currencyId.ToString()]?["quote"]![convertId.Item1.ToString()]?["last_updated"]?.GetValue<DateTimeOffset?>();
-        return (convertId.Item2, quotePrice);
+        var quotePrice = result?.Data?[currencyId.ToString()]?["quote"]![convertCurrency.Id.ToString()]?["price"]?.GetValue<decimal>();
+        return (convertCurrency.Name, quotePrice);
     }
 }
