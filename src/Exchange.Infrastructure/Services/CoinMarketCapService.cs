@@ -4,7 +4,7 @@ using Microsoft.Extensions.Logging;
 
 namespace Exchange.Infrastructure.Services;
 
-public sealed class CoinMarketCapService : ExchangeService, IExchangeService
+public sealed class CoinMarketCapService : HttpService, IExchangeService
 {
     public CoinMarketCapService(ILogger<CoinMarketCapService> logger, IHttpClientFactory httpClientFactory) : base(logger, httpClientFactory, nameof(CoinMarketCapService))
     {

@@ -4,7 +4,7 @@ using Microsoft.Extensions.Logging;
 
 namespace Exchange.Infrastructure.Services;
 
-public class ExchangeRatesService : ExchangeService, IExchangeService
+public sealed class ExchangeRatesService : HttpService, IExchangeService
 {
     public ExchangeRatesService(ILogger<ExchangeRatesService> logger, IHttpClientFactory httpClientFactory) : base(logger, httpClientFactory, nameof(ExchangeRatesService))
     {

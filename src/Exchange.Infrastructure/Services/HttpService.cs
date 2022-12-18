@@ -3,12 +3,12 @@ using Microsoft.Extensions.Logging;
 
 namespace Exchange.Infrastructure.Services;
 
-public abstract class ExchangeService
+public abstract class HttpService
 {
     private readonly HttpClient _httpClient;
-    private readonly ILogger<ExchangeService> _logger;
+    private readonly ILogger<HttpService> _logger;
 
-    protected ExchangeService(ILogger<ExchangeService> logger, IHttpClientFactory httpClientFactory, string httpClientName)
+    protected HttpService(ILogger<HttpService> logger, IHttpClientFactory httpClientFactory, string httpClientName)
     {
         _logger = logger;
         _httpClient = httpClientFactory.CreateClient(httpClientName);
