@@ -5,9 +5,14 @@ EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
 WORKDIR /src
-COPY ["Exchange.Api/Exchange.Api.csproj", "Exchange.Api/"]
+
+COPY ["NuGet.config", ""] 
+
+COPY ["src/Exchange.Api/Exchange.Api.csproj", "Exchange.Api/"]
 RUN dotnet restore "Exchange.Api/Exchange.Api.csproj"
+
 COPY . .
+
 WORKDIR "/src/Exchange.Api"
 RUN dotnet build "Exchange.Api.csproj" -c Release -o /app/build
 
