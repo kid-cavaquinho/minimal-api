@@ -2,7 +2,7 @@
 
 namespace Exchange.Infrastructure.Services;
 
-public sealed class ExchangeRateLiveResponse
+public sealed class ExchangeRateLatestQuotes
 {
     [JsonPropertyName("rates")] 
     public Dictionary<string, decimal>? Rates { set; get; }

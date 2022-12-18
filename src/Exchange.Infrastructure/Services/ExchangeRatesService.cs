@@ -19,7 +19,7 @@ public class ExchangeRatesService : ExchangeService, IExchangeService
     {
         var requestUri = $"exchangerates_data/latest?symbols={string.Join(",", (Currency[]) Enum.GetValues(typeof(Currency)))}&base={currencySymbol}";
         var httpRequestMessage = new HttpRequestMessage(HttpMethod.Get, requestUri);
-        var response = await SendAsync<ExchangeRateLiveResponse>(httpRequestMessage, cancellationToken);
+        var response = await SendAsync<ExchangeRateLatestQuotes>(httpRequestMessage, cancellationToken);
         if (response?.Rates is null || !response.Rates.Any())
             return new CryptoCurrencyQuote(currencySymbol, Enumerable.Empty<Quote>());
 
