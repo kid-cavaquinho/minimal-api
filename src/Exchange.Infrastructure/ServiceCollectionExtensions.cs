@@ -30,6 +30,10 @@ public static class ServiceCollectionExtensions
             .ValidateOnStart();
         
         // Services
+        // Lifetime differences
+        // Scoped lifetime: Objects are the same within the entire scope of a request.
+        // Transient lifetime: Objects are always different; a new instance is provided to every controller and every service.
+        // Singleton lifetime: Objects are the same for every object and every request.
         services.AddScoped<CoinMarketCapService>();
         services.AddScoped<ExchangeRatesService>();
         services.AddScoped<Func<ApiSourceType, IExchangeService>>(serviceProvider => type =>
