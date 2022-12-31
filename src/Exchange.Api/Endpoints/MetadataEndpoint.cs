@@ -11,8 +11,8 @@ public static class MetadataEndpoint
     // https://learn.microsoft.com/en-us/aspnet/core/fundamentals/minimal-apis/responses?view=aspnetcore-7.0#typedresults-vs-results
     public static void UseMetadataEndpoint(this WebApplication app)
     {
-        app.MapGet("metadata", async Task<Results<Ok<Metadata>, BadRequest>>
-            ([Required] [FromQuery] string cryptocurrencyCode, CoinMarketCapService service,
+        app.MapGet("metadata/{cryptocurrencyCode:required}", async Task<Results<Ok<Metadata>, BadRequest>>
+            ([Required] [FromRoute] string cryptocurrencyCode, CoinMarketCapService service,
                 CancellationToken cancellationToken) => string.IsNullOrEmpty(cryptocurrencyCode) 
                 ? TypedResults.BadRequest() 
                 : TypedResults.Ok(await service.GetInfoAsync(cryptocurrencyCode, cancellationToken)))

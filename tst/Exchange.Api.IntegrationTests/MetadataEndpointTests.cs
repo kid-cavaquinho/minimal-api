@@ -18,16 +18,16 @@ public class MetadataEndpointTests
     public async Task Metadata_Should_Return_200()
     {
         using var client = _factory.CreateClient();
-        var response = await client.GetAsync("/metadata?cryptocurrencyCode=wtf");
+        var response = await client.GetAsync("/metadata/wtf");
         response.StatusCode.Should().Be(HttpStatusCode.OK);
     }
     
     [Fact]
-    public async Task Metadata_Should_Return_400()
+    public async Task Metadata_Should_Return_404()
     {
         // https://learn.microsoft.com/en-us/aspnet/core/test/integration-tests?view=aspnetcore-7.0#inject-mock-services
         using var client = _factory.CreateClient();
-        var response = await client.GetAsync("/metadata?cryptocurrencyCode=");
-        response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
+        var response = await client.GetAsync("/metadata/");
+        response.StatusCode.Should().Be(HttpStatusCode.NotFound);
     }
 }
