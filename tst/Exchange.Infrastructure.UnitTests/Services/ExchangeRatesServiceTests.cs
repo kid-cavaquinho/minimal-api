@@ -147,7 +147,7 @@ public class ExchangeRatesServiceTests
         var httpClient = new HttpClient(_httpMessageHandlerMock.Object);
         _httpClientFactoryMock.Setup(_ => _.CreateClient(nameof(ExchangeRatesService))).Returns(httpClient).Verifiable();
         var target = new ExchangeRatesService(new NullLogger<ExchangeRatesService>(), _httpClientFactoryMock.Object);
-        Func<Task> act = async () => { await target.GetInfoAsync(It.IsAny<string[]>(), It.IsAny<CancellationToken>()); };
+        Func<Task> act = async () => { await target.GetInfoAsync(It.IsAny<string>(), It.IsAny<CancellationToken>()); };
         await act.Should().ThrowAsync<NotImplementedException>();
     }
 }

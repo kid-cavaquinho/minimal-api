@@ -5,7 +5,7 @@ namespace Exchange.Api.IntegrationTests.Stubs;
 
 internal class ExchangeServiceStub : IExchangeService
 {
-    public Task<IEnumerable<Metadata>?> GetInfoAsync(string[] symbols, CancellationToken cancellationToken = default)
+    public Task<Metadata> GetInfoAsync(string symbols, CancellationToken cancellationToken = default)
     {
         throw new NotImplementedException();
     }
