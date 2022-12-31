@@ -10,9 +10,9 @@ public sealed class CoinMarketCapService : HttpService, IExchangeService
     {
     }
     
-    public async Task<Metadata> GetInfoAsync(string symbol, CancellationToken cancellationToken = default)
+    public async Task<Metadata> GetInfoAsync(string currencySymbol, CancellationToken cancellationToken = default)
     {
-        var requestUri = $"v2/cryptocurrency/info?symbol={symbol}";
+        var requestUri = $"v2/cryptocurrency/info?symbol={currencySymbol}";
         var httpRequestMessage = new HttpRequestMessage(HttpMethod.Get, requestUri);
         var response = await SendAsync<CoinMarketCapMetadata>(httpRequestMessage, cancellationToken);
         // Todo: Handle nullables
@@ -20,12 +20,12 @@ public sealed class CoinMarketCapService : HttpService, IExchangeService
         return new Metadata(cryptocurrencyMetadataCoinMarketCap.Id, cryptocurrencyMetadataCoinMarketCap.Symbol);
     }
     
-    public async Task<CryptoCurrencyQuote?> GetQuotesAsync(string cryptoCurrencyCode, CancellationToken cancellationToken = default)
+    public async Task<CryptoCurrencyQuote?> GetQuotesAsync(string cryptoCurrencySymbol, CancellationToken cancellationToken = default)
     {
-        var coinMarketCapCryptoCurrencyId = await GetCurrencyId(cryptoCurrencyCode, cancellationToken);
+        var coinMarketCapCryptoCurrencyId = await GetCurrencyId(cryptoCurrencySymbol, cancellationToken);
 
         if (coinMarketCapCryptoCurrencyId is null)
-            return new CryptoCurrencyQuote(cryptoCurrencyCode, Enumerable.Empty<Quote>());
+            return new CryptoCurrencyQuote(cryptoCurrencySymbol, Enumerable.Empty<Quote>());
 
         var coinMarketCapCurrencies = new[] 
         { 
@@ -44,7 +44,7 @@ public sealed class CoinMarketCapService : HttpService, IExchangeService
 
         var quotePrices = await Task.WhenAll(tasks);
 
-        return new CryptoCurrencyQuote(cryptoCurrencyCode.ToUpperInvariant(), quotePrices.Select(s => new Quote(s.currency, s.quote)));
+        return new CryptoCurrencyQuote(cryptoCurrencySymbol.ToUpperInvariant(), quotePrices.Select(s => new Quote(s.currency, s.quote)));
     }
 
     private async Task<(string currency, decimal? quote)> GetQuotePriceAsync(int currencyId, (int Id, string Name) convertCurrency, CancellationToken cancellationToken = default)
