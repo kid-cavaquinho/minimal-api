@@ -1,9 +1,7 @@
-﻿using Exchange.API.Middlewares;
+﻿using Exchange.Api.Middlewares;
 using Microsoft.OpenApi.Models;
-using Serilog;
-using Serilog.Enrichers;
 
-namespace Exchange.API;
+namespace Exchange.Api.Extensions;
 
 public static class ServiceCollectionExtensions
 {

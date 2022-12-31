@@ -1,6 +1,6 @@
 ﻿using Serilog;
 
-namespace Exchange.API.Extensions;
+namespace Exchange.Api.Extensions;
 
 public static class WebApplicationBuilderExtensions
 {

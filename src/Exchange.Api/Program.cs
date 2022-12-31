@@ -1,7 +1,6 @@
-using Exchange.API;
 using Exchange.Api.Endpoints;
-using Exchange.API.Extensions;
-using Exchange.API.Middlewares;
+using Exchange.Api.Extensions;
+using Exchange.Api.Middlewares;
 using Exchange.Infrastructure;
 using Serilog;
 
