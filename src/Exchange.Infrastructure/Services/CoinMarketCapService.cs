@@ -9,24 +9,24 @@ public sealed class CoinMarketCapService : HttpService, IExchangeService
     public CoinMarketCapService(ILogger<CoinMarketCapService> logger, IHttpClientFactory httpClientFactory) : base(logger, httpClientFactory, nameof(CoinMarketCapService))
     {
     }
-
-    public async Task<IEnumerable<Metadata>?> GetInfoAsync(string[] symbols, CancellationToken cancellationToken = default)
+    
+    public async Task<Metadata> GetInfoAsync(string symbol, CancellationToken cancellationToken = default)
     {
-        var requestUri = $"v2/cryptocurrency/info?symbol={string.Join(",", symbols)}";
+        var requestUri = $"v2/cryptocurrency/info?symbol={symbol}";
         var httpRequestMessage = new HttpRequestMessage(HttpMethod.Get, requestUri);
         var response = await SendAsync<CoinMarketCapMetadata>(httpRequestMessage, cancellationToken);
-        return response?.CryptocurrenciesMetadata?.Select(m => new Metadata(m.Value.First().Id, m.Value.First().Symbol));
+        // Todo: Handle nullables
+        var cryptocurrencyMetadataCoinMarketCap = response!.CryptocurrenciesMetadata!.First().Value.First();
+        return new Metadata(cryptocurrencyMetadataCoinMarketCap.Id, cryptocurrencyMetadataCoinMarketCap.Symbol);
     }
-
+    
     public async Task<CryptoCurrencyQuote?> GetQuotesAsync(string cryptoCurrencyCode, CancellationToken cancellationToken = default)
     {
-        var metadata = await GetInfoAsync(new[] { cryptoCurrencyCode }, cancellationToken);
+        var coinMarketCapCryptoCurrencyId = await GetCurrencyId(cryptoCurrencyCode, cancellationToken);
 
-        if (metadata is null)
+        if (coinMarketCapCryptoCurrencyId is null)
             return new CryptoCurrencyQuote(cryptoCurrencyCode, Enumerable.Empty<Quote>());
 
-        var coinMarketCapCryptoCurrencyId = metadata.First().CurrencyId;
-        
         var coinMarketCapCurrencies = new[] 
         { 
             CoinMarketCapCurrencyId.Aud,
@@ -36,10 +36,15 @@ public sealed class CoinMarketCapService : HttpService, IExchangeService
             CoinMarketCapCurrencyId.Usd 
         };
 
-        var tasks = coinMarketCapCurrencies.Select(convertCurrency => GetQuotePriceAsync(coinMarketCapCryptoCurrencyId, convertCurrency, cancellationToken));
+        var tasks = new List<Task<(string currency, decimal? quote)>>(coinMarketCapCurrencies.Length);
+        foreach (var coinMarketCapCurrency in coinMarketCapCurrencies)
+        {
+            tasks.Add(GetQuotePriceAsync(coinMarketCapCryptoCurrencyId.Value, coinMarketCapCurrency, cancellationToken));
+        }
+
         var quotePrices = await Task.WhenAll(tasks);
 
-        return new CryptoCurrencyQuote(cryptoCurrencyCode, quotePrices.Select(s => new Quote(s.currency, s.quote)));
+        return new CryptoCurrencyQuote(cryptoCurrencyCode.ToUpperInvariant(), quotePrices.Select(s => new Quote(s.currency, s.quote)));
     }
 
     private async Task<(string currency, decimal? quote)> GetQuotePriceAsync(int currencyId, (int Id, string Name) convertCurrency, CancellationToken cancellationToken = default)
@@ -49,5 +54,11 @@ public sealed class CoinMarketCapService : HttpService, IExchangeService
         var result = await SendAsync<CoinMarketCapLatestQuotes>(httpRequestMessage, cancellationToken);
         var quotePrice = result?.Data?[currencyId.ToString()]?["quote"]![convertCurrency.Id.ToString()]?["price"]?.GetValue<decimal>();
         return (convertCurrency.Name, quotePrice);
+    }
+    
+    private async Task<int?> GetCurrencyId(string cryptoCurrencyCode, CancellationToken cancellationToken = default)
+    {
+        var response = await GetInfoAsync(cryptoCurrencyCode, cancellationToken);
+        return response?.CurrencyId;
     }
 }
