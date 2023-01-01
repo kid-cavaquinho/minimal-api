@@ -10,14 +10,21 @@ public sealed class CoinMarketCapService : HttpService, IExchangeService
     {
     }
     
-    public async Task<Metadata> GetInfoAsync(string currencySymbol, CancellationToken cancellationToken = default)
+    public async Task<Metadata?> GetInfoAsync(string currencySymbol, CancellationToken cancellationToken = default)
     {
         var requestUri = $"v2/cryptocurrency/info?symbol={currencySymbol}";
         var httpRequestMessage = new HttpRequestMessage(HttpMethod.Get, requestUri);
         var response = await SendAsync<CoinMarketCapMetadata>(httpRequestMessage, cancellationToken);
-        // Todo: Handle nullables
-        var cryptocurrencyMetadataCoinMarketCap = response!.CryptocurrenciesMetadata!.First().Value.First();
-        return new Metadata(cryptocurrencyMetadataCoinMarketCap.Id, cryptocurrencyMetadataCoinMarketCap.Symbol);
+        if (response is null)
+            return default;
+
+        var cryptocurrencyMetadataCoinMarketCap = response.CryptocurrenciesMetadata?.FirstOrDefault().Value.FirstOrDefault();
+        
+        // Todo: Consider matching the symbols to assure a valid metadata response
+        
+        return cryptocurrencyMetadataCoinMarketCap is null 
+            ? default 
+            : new Metadata(cryptocurrencyMetadataCoinMarketCap.Id, cryptocurrencyMetadataCoinMarketCap.Symbol, cryptocurrencyMetadataCoinMarketCap.Description);
     }
     
     public async Task<CryptoCurrencyQuote?> GetQuotesAsync(string cryptoCurrencySymbol, CancellationToken cancellationToken = default)
@@ -59,6 +66,6 @@ public sealed class CoinMarketCapService : HttpService, IExchangeService
     private async Task<int?> GetCurrencyId(string cryptoCurrencyCode, CancellationToken cancellationToken = default)
     {
         var response = await GetInfoAsync(cryptoCurrencyCode, cancellationToken);
-        return response?.CurrencyId;
+        return response?.Id;
     }
 }

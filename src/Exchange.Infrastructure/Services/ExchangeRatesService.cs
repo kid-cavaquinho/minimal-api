@@ -10,7 +10,7 @@ public sealed class ExchangeRatesService : HttpService, IExchangeService
     {
     }
     
-    public Task<Metadata> GetInfoAsync(string currencySymbol, CancellationToken cancellationToken = default)
+    public Task<Metadata?> GetInfoAsync(string currencySymbol, CancellationToken cancellationToken = default)
     {
         throw new NotImplementedException();
     }

@@ -2,16 +2,19 @@
 
 public sealed class Metadata
 {
-    public Metadata(int currencyId, string? cryptoCurrencyCode)
+    public Metadata(int id, string? symbol, string description)
     {
-        if (string.IsNullOrWhiteSpace(cryptoCurrencyCode))
-            throw new ArgumentNullException(nameof(cryptoCurrencyCode));
+        if (string.IsNullOrWhiteSpace(symbol))
+            throw new ArgumentNullException(nameof(symbol));
         
-        CurrencyId = currencyId;
-        CryptoCurrencyCode = cryptoCurrencyCode;
+        Id = id;
+        Symbol = symbol;
+        Description = description;
     }
 
-    public int CurrencyId { get; }
+    public int Id { get; }
 
-    public string CryptoCurrencyCode { get; }
+    public string Symbol { get; }
+
+    public string Description { get; }
 }

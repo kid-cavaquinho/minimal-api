@@ -17,11 +17,8 @@ public sealed class CryptocurrencyMetadataCoinMarketCap
     public int Id { get; set; }
         
     [JsonPropertyName("symbol")]
-    public string? Symbol { get; set; } 
+    public required string Symbol { get; set; }
     
-    [JsonPropertyName("name")]
-    public string? Name { get; set; } 
-    
-    [JsonPropertyName("slug")]
-    public string? Slug { get; set; } 
+    [JsonPropertyName("description")]
+    public required string Description { get; set; }
 }

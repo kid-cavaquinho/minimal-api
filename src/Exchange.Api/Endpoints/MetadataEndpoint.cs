@@ -11,16 +11,25 @@ public static class MetadataEndpoint
     // https://learn.microsoft.com/en-us/aspnet/core/fundamentals/minimal-apis/responses?view=aspnetcore-7.0#typedresults-vs-results
     public static void UseMetadataEndpoint(this WebApplication app)
     {
-        app.MapGet("metadata/{cryptocurrencyCode:required}", async Task<Results<Ok<Metadata>, BadRequest>>
+        app.MapGet("metadata/{cryptocurrencyCode:required}", async Task<Results<Ok<Metadata>, BadRequest, NotFound>>
             ([Required] [FromRoute] string cryptocurrencyCode, CoinMarketCapService service,
-                CancellationToken cancellationToken) => string.IsNullOrEmpty(cryptocurrencyCode) 
-                ? TypedResults.BadRequest() 
-                : TypedResults.Ok(await service.GetInfoAsync(cryptocurrencyCode, cancellationToken)))
+                CancellationToken cancellationToken) =>
+            {
+                if (string.IsNullOrEmpty(cryptocurrencyCode))
+                    return TypedResults.BadRequest();
+
+                var result = await service.GetInfoAsync(cryptocurrencyCode, cancellationToken);
+
+                if (result is null)
+                    return TypedResults.NotFound();
+                
+                return TypedResults.Ok(result);
+            })
             .WithTags("Metadata")
             .WithName("Metadata")
             .WithOpenApi(operation => new(operation)
             {
-                Summary = "Returns all static metadata available for a cryptocurrency. This information includes details like logo, description and links to technical documentation"
+                Summary = "Returns static metadata available for a cryptocurrency, this information includes details like description, symbol and id"
             });
     }
 }
