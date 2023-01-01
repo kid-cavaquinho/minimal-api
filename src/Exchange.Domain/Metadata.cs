@@ -2,11 +2,8 @@
 
 public sealed class Metadata
 {
-    public Metadata(int id, string? symbol, string description)
+    public Metadata(int id, string symbol, string description)
     {
-        if (string.IsNullOrWhiteSpace(symbol))
-            throw new ArgumentNullException(nameof(symbol));
-        
         Id = id;
         Symbol = symbol;
         Description = description;
