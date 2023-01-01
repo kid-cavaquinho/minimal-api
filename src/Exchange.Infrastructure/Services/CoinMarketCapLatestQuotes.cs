@@ -5,11 +5,8 @@ namespace Exchange.Infrastructure.Services;
 
 public sealed class CoinMarketCapLatestQuotes
 {
-    [JsonPropertyName("status")] 
-    public CoinMarketCapStatus? Status { get; set; }
-    
     [JsonPropertyName("data")] 
-    public JsonNode? Data { get; set; }
+    public required JsonNode Data { get; set; }
 }
 
 public sealed class CoinMarketCapQuotesLatestResponseV2

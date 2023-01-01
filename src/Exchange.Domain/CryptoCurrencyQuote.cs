@@ -4,7 +4,7 @@ public sealed class CryptoCurrencyQuote
 {
     public CryptoCurrencyQuote(string cryptoCurrencyCode, IEnumerable<Quote> quotes)
     {
-        if (string.IsNullOrWhiteSpace(cryptoCurrencyCode))
+        if (string.IsNullOrEmpty(cryptoCurrencyCode))
             throw new ArgumentNullException(nameof(cryptoCurrencyCode));
 
         CryptoCurrencyCode = cryptoCurrencyCode;
