@@ -14,7 +14,7 @@ public static class QuotesEndpoint
         app.MapGet("quotes/{cryptocurrencyCode:required}", async ([FromRoute] string cryptocurrencyCode,
                 [FromServices] Func<ApiSourceType, IExchangeService> serviceResolver,
                 [FromServices] IOptions<ApiOptions> options,
-                CancellationToken cancellationToken) => TypedResults.Ok(await serviceResolver(options.Value.Default).GetQuotesAsync(cryptocurrencyCode, cancellationToken)))
+                CancellationToken cancellationToken) => TypedResults.Ok(await serviceResolver(options.Value.Default).GetQuotesAsync(new CryptoCurrencySymbol(cryptocurrencyCode), cancellationToken)))
             .WithTags("Quotes")
             .WithName("Quotes")
             .WithOpenApi(operation => new(operation)

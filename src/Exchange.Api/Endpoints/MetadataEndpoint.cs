@@ -18,7 +18,7 @@ public static class MetadataEndpoint
                 if (string.IsNullOrEmpty(cryptocurrencyCode))
                     return TypedResults.BadRequest();
 
-                var result = await service.GetInfoAsync(cryptocurrencyCode, cancellationToken);
+                var result = await service.GetInfoAsync(new CryptoCurrencySymbol(cryptocurrencyCode), cancellationToken);
 
                 if (result is null)
                     return TypedResults.NotFound();

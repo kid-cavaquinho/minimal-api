@@ -10,9 +10,9 @@ public sealed class CoinMarketCapService : HttpService, IExchangeService
     {
     }
     
-    public async Task<Metadata?> GetInfoAsync(string cryptoCurrencySymbol, CancellationToken cancellationToken = default)
+    public async Task<Metadata?> GetInfoAsync(CryptoCurrencySymbol cryptoCurrencySymbol, CancellationToken cancellationToken = default)
     {
-        var requestUri = $"v2/cryptocurrency/info?symbol={cryptoCurrencySymbol}";
+        var requestUri = $"v2/cryptocurrency/info?symbol={cryptoCurrencySymbol.Value}";
         var httpRequestMessage = new HttpRequestMessage(HttpMethod.Get, requestUri);
         var response = await SendAsync<CoinMarketCapMetadata>(httpRequestMessage, cancellationToken);
         if (response is null)
@@ -27,12 +27,12 @@ public sealed class CoinMarketCapService : HttpService, IExchangeService
             : new Metadata(cryptocurrencyMetadataCoinMarketCap.Id, cryptocurrencyMetadataCoinMarketCap.Symbol, cryptocurrencyMetadataCoinMarketCap.Description);
     }
     
-    public async Task<CryptoCurrencyQuote?> GetQuotesAsync(string cryptoCurrencySymbol, CancellationToken cancellationToken = default)
+    public async Task<CryptoCurrencyQuote?> GetQuotesAsync(CryptoCurrencySymbol cryptoCurrencySymbol, CancellationToken cancellationToken = default)
     {
         var coinMarketCapCryptoCurrencyId = await GetCurrencyId(cryptoCurrencySymbol, cancellationToken);
 
         if (coinMarketCapCryptoCurrencyId is null)
-            return new CryptoCurrencyQuote(cryptoCurrencySymbol, Enumerable.Empty<Quote>());
+            return new CryptoCurrencyQuote(cryptoCurrencySymbol.Value, Enumerable.Empty<Quote>());
 
         var coinMarketCapCurrencies = new[] 
         { 
@@ -51,7 +51,7 @@ public sealed class CoinMarketCapService : HttpService, IExchangeService
 
         var quotePrices = await Task.WhenAll(tasks);
 
-        return new CryptoCurrencyQuote(cryptoCurrencySymbol.ToUpperInvariant(), quotePrices.Select(s => new Quote(s.currency, s.quote)));
+        return new CryptoCurrencyQuote(cryptoCurrencySymbol.Value.ToUpperInvariant(), quotePrices.Select(s => new Quote(s.currency, s.quote)));
     }
 
     private async Task<(string currency, decimal? quote)> GetQuotePriceAsync(int currencyId, (int Id, string Name) convertCurrency, CancellationToken cancellationToken = default)
@@ -63,7 +63,7 @@ public sealed class CoinMarketCapService : HttpService, IExchangeService
         return (convertCurrency.Name, quotePrice);
     }
     
-    private async Task<int?> GetCurrencyId(string cryptoCurrencySymbol, CancellationToken cancellationToken = default)
+    private async Task<int?> GetCurrencyId(CryptoCurrencySymbol cryptoCurrencySymbol, CancellationToken cancellationToken = default)
     {
         var response = await GetInfoAsync(cryptoCurrencySymbol, cancellationToken);
         return response?.Id;

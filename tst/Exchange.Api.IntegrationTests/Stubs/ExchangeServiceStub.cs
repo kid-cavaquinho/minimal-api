@@ -5,12 +5,12 @@ namespace Exchange.Api.IntegrationTests.Stubs;
 
 internal class ExchangeServiceStub : IExchangeService
 {
-    public Task<Metadata?> GetInfoAsync(string currencySymbol, CancellationToken cancellationToken = default)
+    public Task<Metadata?> GetInfoAsync(CryptoCurrencySymbol currencySymbol, CancellationToken cancellationToken = default)
     {
         throw new NotImplementedException();
     }
 
-    public async Task<CryptoCurrencyQuote?> GetQuotesAsync(string cryptoCurrencySymbol, CancellationToken cancellationToken = default)
+    public async Task<CryptoCurrencyQuote?> GetQuotesAsync(CryptoCurrencySymbol cryptoCurrencySymbol, CancellationToken cancellationToken = default)
     {
         var fakeQuotes = new List<Quote>
         {

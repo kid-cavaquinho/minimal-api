@@ -2,7 +2,7 @@
 
 public interface IExchangeService
 {
-    Task<Metadata?> GetInfoAsync(string cryptoCurrencySymbol, CancellationToken cancellationToken = default);
+    Task<Metadata?> GetInfoAsync(CryptoCurrencySymbol cryptoCurrencySymbol, CancellationToken cancellationToken = default);
 
-    Task<CryptoCurrencyQuote?> GetQuotesAsync(string cryptoCurrencySymbol, CancellationToken cancellationToken = default);
+    Task<CryptoCurrencyQuote?> GetQuotesAsync(CryptoCurrencySymbol cryptoCurrencySymbol, CancellationToken cancellationToken = default);
 }

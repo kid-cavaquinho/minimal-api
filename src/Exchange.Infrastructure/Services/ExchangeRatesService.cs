@@ -10,19 +10,19 @@ public sealed class ExchangeRatesService : HttpService, IExchangeService
     {
     }
     
-    public Task<Metadata?> GetInfoAsync(string cryptoCurrencySymbol, CancellationToken cancellationToken = default)
+    public Task<Metadata?> GetInfoAsync(CryptoCurrencySymbol cryptoCurrencySymbol, CancellationToken cancellationToken = default)
     {
         throw new NotImplementedException();
     }
 
-    public async Task<CryptoCurrencyQuote?> GetQuotesAsync(string cryptoCurrencySymbol, CancellationToken cancellationToken = default)
+    public async Task<CryptoCurrencyQuote?> GetQuotesAsync(CryptoCurrencySymbol cryptoCurrencySymbol, CancellationToken cancellationToken = default)
     {
         var requestUri = $"exchangerates_data/latest?symbols={string.Join(",", (Currency[]) Enum.GetValues(typeof(Currency)))}&base={cryptoCurrencySymbol}";
         var httpRequestMessage = new HttpRequestMessage(HttpMethod.Get, requestUri);
         var response = await SendAsync<ExchangeRateLatestQuotes>(httpRequestMessage, cancellationToken);
         if (response?.Rates is null || !response.Rates.Any())
-            return new CryptoCurrencyQuote(cryptoCurrencySymbol, Enumerable.Empty<Quote>());
+            return new CryptoCurrencyQuote(cryptoCurrencySymbol.Value.ToUpperInvariant(), Enumerable.Empty<Quote>());
 
-        return new CryptoCurrencyQuote(cryptoCurrencySymbol.ToUpperInvariant(), response.Rates.Select(r => new Quote(r.Key, r.Value)));
+        return new CryptoCurrencyQuote(cryptoCurrencySymbol.Value.ToUpperInvariant(), response.Rates.Select(r => new Quote(r.Key, r.Value)));
     }
 }

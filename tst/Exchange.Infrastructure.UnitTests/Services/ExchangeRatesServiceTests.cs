@@ -46,7 +46,7 @@ public class ExchangeRatesServiceTests
 
         var target = new ExchangeRatesService(new NullLogger<ExchangeRatesService>(), _httpClientFactoryMock.Object);
 
-        var actual = await target.GetQuotesAsync(CryptoCurrencyCode);
+        var actual = await target.GetQuotesAsync(new CryptoCurrencySymbol(CryptoCurrencyCode));
 
         actual.Should().NotBeNull();
         actual.As<CryptoCurrencyQuote>().CryptoCurrencyCode.Should().Be(CryptoCurrencyCode);
@@ -69,7 +69,7 @@ public class ExchangeRatesServiceTests
 
         var target = new ExchangeRatesService(new NullLogger<ExchangeRatesService>(), _httpClientFactoryMock.Object);
 
-        var actual = await target.GetQuotesAsync(CryptoCurrencyCode);
+        var actual = await target.GetQuotesAsync(new CryptoCurrencySymbol(CryptoCurrencyCode));
 
         actual.Should().NotBeNull();
         actual.As<CryptoCurrencyQuote>().CryptoCurrencyCode.Should().Be(CryptoCurrencyCode);
@@ -91,7 +91,7 @@ public class ExchangeRatesServiceTests
 
         var target = new ExchangeRatesService(new NullLogger<ExchangeRatesService>(), _httpClientFactoryMock.Object);
 
-        var actual = await target.GetQuotesAsync(CryptoCurrencyCode);
+        var actual = await target.GetQuotesAsync(new CryptoCurrencySymbol(CryptoCurrencyCode));
 
         actual.Should().NotBeNull();
         actual.As<CryptoCurrencyQuote>().CryptoCurrencyCode.Should().Be(CryptoCurrencyCode);
@@ -114,7 +114,7 @@ public class ExchangeRatesServiceTests
 
         var target = new ExchangeRatesService(new NullLogger<ExchangeRatesService>(), _httpClientFactoryMock.Object);
 
-        var actual = await target.GetQuotesAsync(CryptoCurrencyCode);
+        var actual = await target.GetQuotesAsync(new CryptoCurrencySymbol(CryptoCurrencyCode));
 
         actual.Should().NotBeNull();
         actual.As<CryptoCurrencyQuote>().CryptoCurrencyCode.Should().Be(CryptoCurrencyCode);
@@ -134,7 +134,7 @@ public class ExchangeRatesServiceTests
 
         var target = new ExchangeRatesService(new NullLogger<ExchangeRatesService>(), _httpClientFactoryMock.Object);
 
-        var actual = await target.GetQuotesAsync(CryptoCurrencyCode);
+        var actual = await target.GetQuotesAsync(new CryptoCurrencySymbol(CryptoCurrencyCode));
 
         actual.Should().NotBeNull();
         actual.As<CryptoCurrencyQuote>().CryptoCurrencyCode.Should().Be(CryptoCurrencyCode);
@@ -147,7 +147,7 @@ public class ExchangeRatesServiceTests
         var httpClient = new HttpClient(_httpMessageHandlerMock.Object);
         _httpClientFactoryMock.Setup(_ => _.CreateClient(nameof(ExchangeRatesService))).Returns(httpClient).Verifiable();
         var target = new ExchangeRatesService(new NullLogger<ExchangeRatesService>(), _httpClientFactoryMock.Object);
-        Func<Task> act = async () => { await target.GetInfoAsync(It.IsAny<string>(), It.IsAny<CancellationToken>()); };
+        Func<Task> act = async () => { await target.GetInfoAsync(It.IsAny<CryptoCurrencySymbol>(), It.IsAny<CancellationToken>()); };
         await act.Should().ThrowAsync<NotImplementedException>();
     }
 }

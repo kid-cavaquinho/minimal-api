@@ -46,7 +46,7 @@ public class CoinMarketCapServiceTests
     
         var target = new CoinMarketCapService(new NullLogger<CoinMarketCapService>(), _httpClientFactoryMock.Object);
     
-        var actual = await target.GetInfoAsync(CryptoCurrencyCode);
+        var actual = await target.GetInfoAsync(new CryptoCurrencySymbol(CryptoCurrencyCode));
     
         actual.Should().BeNull();
     }
@@ -69,7 +69,7 @@ public class CoinMarketCapServiceTests
     
         var target = new CoinMarketCapService(new NullLogger<CoinMarketCapService>(), _httpClientFactoryMock.Object);
     
-        var actual = await target.GetInfoAsync(expectedCurrencySymbol);
+        var actual = await target.GetInfoAsync(new CryptoCurrencySymbol(expectedCurrencySymbol));
 
         actual.As<Metadata>().Should().BeNull();
     }
@@ -93,7 +93,7 @@ public class CoinMarketCapServiceTests
     
         var target = new CoinMarketCapService(new NullLogger<CoinMarketCapService>(), _httpClientFactoryMock.Object);
     
-        var actual = await target.GetInfoAsync(expectedCurrencySymbol);
+        var actual = await target.GetInfoAsync(new CryptoCurrencySymbol(expectedCurrencySymbol));
 
         actual.As<Metadata>().Should().NotBeNull();
         actual.As<Metadata>().Id.Should().Be(1);
