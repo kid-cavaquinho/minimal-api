@@ -10,9 +10,9 @@ public sealed class CoinMarketCapService : HttpService, IExchangeService
     {
     }
     
-    public async Task<Metadata?> GetInfoAsync(string currencySymbol, CancellationToken cancellationToken = default)
+    public async Task<Metadata?> GetInfoAsync(string cryptoCurrencySymbol, CancellationToken cancellationToken = default)
     {
-        var requestUri = $"v2/cryptocurrency/info?symbol={currencySymbol}";
+        var requestUri = $"v2/cryptocurrency/info?symbol={cryptoCurrencySymbol}";
         var httpRequestMessage = new HttpRequestMessage(HttpMethod.Get, requestUri);
         var response = await SendAsync<CoinMarketCapMetadata>(httpRequestMessage, cancellationToken);
         if (response is null)
@@ -63,9 +63,9 @@ public sealed class CoinMarketCapService : HttpService, IExchangeService
         return (convertCurrency.Name, quotePrice);
     }
     
-    private async Task<int?> GetCurrencyId(string cryptoCurrencyCode, CancellationToken cancellationToken = default)
+    private async Task<int?> GetCurrencyId(string cryptoCurrencySymbol, CancellationToken cancellationToken = default)
     {
-        var response = await GetInfoAsync(cryptoCurrencyCode, cancellationToken);
+        var response = await GetInfoAsync(cryptoCurrencySymbol, cancellationToken);
         return response?.Id;
     }
 }
