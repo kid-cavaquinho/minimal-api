@@ -1,3 +1,3 @@
 ﻿namespace Exchange.Domain;
 
-public readonly record struct Quote(string CurrencyCode, decimal? Price);
+public sealed record class Quote(string CurrencyCode, decimal? Price);
