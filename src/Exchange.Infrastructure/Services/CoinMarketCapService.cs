@@ -13,8 +13,7 @@ public sealed class CoinMarketCapService : HttpService, IExchangeService
     public async Task<Metadata?> GetInfoAsync(CryptoCurrencySymbol cryptoCurrencySymbol, CancellationToken cancellationToken = default)
     {
         var requestUri = $"v2/cryptocurrency/info?symbol={cryptoCurrencySymbol.Value}";
-        var httpRequestMessage = new HttpRequestMessage(HttpMethod.Get, requestUri);
-        var response = await SendAsync<CoinMarketCapMetadata>(httpRequestMessage, cancellationToken);
+        var response = await SendAsync<CoinMarketCapMetadata>(new HttpRequestMessage(HttpMethod.Get, requestUri), cancellationToken);
         if (response is null)
             return default;
 
@@ -57,9 +56,8 @@ public sealed class CoinMarketCapService : HttpService, IExchangeService
     private async Task<(string currency, decimal? quote)> GetQuotePriceAsync(int currencyId, (int Id, string Name) convertCurrency, CancellationToken cancellationToken = default)
     {
         var requestUri = $"v2/cryptocurrency/quotes/latest?id={currencyId}&convert_id={convertCurrency.Id}";
-        var httpRequestMessage = new HttpRequestMessage(HttpMethod.Get, requestUri);
-        var result = await SendAsync<CoinMarketCapLatestQuotes>(httpRequestMessage, cancellationToken);
-        var quotePrice = result?.Data?[currencyId.ToString()]?["quote"]![convertCurrency.Id.ToString()]?["price"]?.GetValue<decimal>();
+        var result = await SendAsync<CoinMarketCapLatestQuotes>(new HttpRequestMessage(HttpMethod.Get, requestUri), cancellationToken);
+        var quotePrice = result?.Data[currencyId.ToString()]?["quote"]![convertCurrency.Id.ToString()]?["price"]?.GetValue<decimal>();
         return (convertCurrency.Name, quotePrice);
     }
     
