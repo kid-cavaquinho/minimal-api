@@ -12,9 +12,9 @@ public static class QuotesEndpoint
     public static void UseQuotesEndpoint(this WebApplication app)
     {
         app.MapGet("quotes/{cryptocurrencyCode:required}", async ([FromRoute] string cryptocurrencyCode,
-                [FromServices] Func<ApiSourceType, IExchangeService> serviceResolver,
+                [FromServices] IExchangeServiceFactory factory,
                 [FromServices] IOptions<ApiOptions> options,
-                CancellationToken cancellationToken) => TypedResults.Ok(await serviceResolver(options.Value.Default).GetQuotesAsync(new CryptoCurrencySymbol(cryptocurrencyCode), cancellationToken)))
+                CancellationToken cancellationToken) => TypedResults.Ok(await factory.GetInstance(options.Value.Default).GetQuotesAsync(new CryptoCurrencySymbol(cryptocurrencyCode), cancellationToken)))
             .WithTags("Quotes")
             .WithName("Quotes")
             .WithOpenApi(operation => new(operation)

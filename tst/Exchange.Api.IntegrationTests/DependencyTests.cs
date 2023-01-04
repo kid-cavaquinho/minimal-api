@@ -1,6 +1,7 @@
 ﻿using System.Text;
 using Exchange.Domain;
 using Exchange.Domain.Interfaces;
+using Exchange.Infrastructure;
 using Exchange.Infrastructure.Services;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.AspNetCore.TestHost;
@@ -11,12 +12,12 @@ namespace Exchange.Api.IntegrationTests;
 
 public class DependencyTests
 {
-    private readonly List<(Type ServiceType, Type? ImplType, ServiceLifetime ServiceLifeTime)>
-        _descriptors = new()
+    private readonly List<(Type ServiceType, Type? ImplType, ServiceLifetime ServiceLifeTime)> _descriptors = new()
         {
-            // (typeof(CoinMarketCapService), typeof(CoinMarketCapService), ServiceLifetime.Scoped),
-            // (typeof(ExchangeRatesService), typeof(ExchangeRatesService), ServiceLifetime.Scoped),
-            (typeof(Func<ApiSourceType, IExchangeService>), null, ServiceLifetime.Scoped)
+            (typeof(IExchangeService), typeof(CoinMarketCapService), ServiceLifetime.Scoped),
+            (typeof(IExchangeService), typeof(ExchangeRatesService), ServiceLifetime.Scoped),
+            (typeof(IExchangeServiceFactory), typeof(ExchangeServiceFactory), ServiceLifetime.Scoped),
+            // (typeof(Func<ApiSourceType, IExchangeService>), null, ServiceLifetime.Scoped)
         };
 
     [TestCase]

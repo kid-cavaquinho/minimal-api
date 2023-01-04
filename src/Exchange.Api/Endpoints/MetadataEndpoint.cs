@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using Exchange.Domain;
+using Exchange.Domain.Interfaces;
 using Exchange.Infrastructure.Services;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
@@ -12,13 +13,13 @@ public static class MetadataEndpoint
     public static void UseMetadataEndpoint(this WebApplication app)
     {
         app.MapGet("metadata/{cryptocurrencyCode:required}", async Task<Results<Ok<Metadata>, BadRequest, NotFound>>
-            ([Required] [FromRoute] string cryptocurrencyCode, CoinMarketCapService service,
+            ([Required] [FromRoute] string cryptocurrencyCode, [FromServices] IExchangeServiceFactory factory,
                 CancellationToken cancellationToken) =>
             {
                 if (string.IsNullOrEmpty(cryptocurrencyCode))
                     return TypedResults.BadRequest();
 
-                var result = await service.GetInfoAsync(new CryptoCurrencySymbol(cryptocurrencyCode), cancellationToken);
+                var result = await factory.GetInstance(ApiSourceType.CoinMarketCap).GetInfoAsync(new CryptoCurrencySymbol(cryptocurrencyCode), cancellationToken);
 
                 if (result is null)
                     return TypedResults.NotFound();

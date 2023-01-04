@@ -34,17 +34,28 @@ public static class ServiceCollectionExtensions
         // Scoped lifetime: Objects are the same within the entire scope of a request.
         // Transient lifetime: Objects are always different; a new instance is provided to every controller and every service.
         // Singleton lifetime: Objects are the same for every object and every request.
-        services.AddScoped<CoinMarketCapService>();
-        services.AddScoped<ExchangeRatesService>();
-        services.AddScoped<Func<ApiSourceType, IExchangeService>>(serviceProvider => type =>
-        {
-            return type switch
-            {
-                ApiSourceType.ExchangeRates => serviceProvider.GetRequiredService<ExchangeRatesService>(),
-                ApiSourceType.CoinMarketCap => serviceProvider.GetRequiredService<CoinMarketCapService>(),
-                _ => serviceProvider.GetRequiredService<CoinMarketCapService>()
-            };
-        });
+       
+        services.AddScoped<IExchangeService, CoinMarketCapService>();
+        services.AddScoped<IExchangeService, ExchangeRatesService>();
+        
+        // Factory solution
+        // - Easy to implement
+        // - Implementation can be change at runtime
+        // - Retrieval logic is contained in a single place
+        // - Every implementation is instantiated (as part of IEnumerable) even if not required or used. This could have an impact on performance and memory usage.
+        // - Slightly slower, and slightly using more memory than injecting an IEnumerable approach (due to the extra layer between the handler and the IEnumerable collection)
+        services.AddScoped<IExchangeServiceFactory, ExchangeServiceFactory>();
+        
+        // This method uses the baked-in dependency services to register a generic delegate `func` which returns an interface implementation depending on a specific enum value.
+        // services.AddScoped<Func<ApiSourceType, IExchangeService>>(serviceProvider => type =>
+        // {
+        //     return type switch
+        //     {
+        //         ApiSourceType.ExchangeRates => serviceProvider.GetRequiredService<ExchangeRatesService>(),
+        //         ApiSourceType.CoinMarketCap => serviceProvider.GetRequiredService<CoinMarketCapService>(),
+        //         _ => serviceProvider.GetRequiredService<CoinMarketCapService>()
+        //     };
+        // });
         
         // Use named client because of: 
         // - The app requires many distinct uses of HttpClient.
