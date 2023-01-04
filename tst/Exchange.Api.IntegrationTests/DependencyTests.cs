@@ -1,5 +1,4 @@
 ﻿using System.Text;
-using Exchange.Domain;
 using Exchange.Domain.Interfaces;
 using Exchange.Infrastructure;
 using Exchange.Infrastructure.Services;
@@ -28,12 +27,12 @@ public class DependencyTests
             builder.ConfigureTestServices(serviceCollection =>
             {
                 var services = serviceCollection.ToList();
+                
                 var result = ValidateServices(services);
+                if (result.Success)
+                    Assert.Pass();    
                 
-                if (!result.Success)
-                    Assert.Fail(result.Message);
-                
-                Assert.Pass();
+                Assert.Fail(result.Message);
             });
         });
 
@@ -62,7 +61,6 @@ public class DependencyTests
 
             failedText.AppendLine(
                 $"{descriptor.ServiceType.Name}|{descriptor.ImplType?.Name}|{descriptor.ServiceLifeTime}");
-            
         }
         
         return new DependencyAssertionResult
@@ -72,7 +70,7 @@ public class DependencyTests
         };
     }
 
-    public sealed class DependencyAssertionResult
+    internal sealed class DependencyAssertionResult
     {
         public bool Success { get; init; }
         public required string Message { get; init; }
