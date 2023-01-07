@@ -1,4 +1,5 @@
 ﻿using System.Text;
+using Exchange.Api.Middlewares;
 using Exchange.Domain.Interfaces;
 using Exchange.Infrastructure;
 using Exchange.Infrastructure.Services;
@@ -16,6 +17,7 @@ public class DependencyTests
             (typeof(IExchangeService), typeof(CoinMarketCapService), ServiceLifetime.Scoped),
             (typeof(IExchangeService), typeof(ExchangeRatesService), ServiceLifetime.Scoped),
             (typeof(IExchangeServiceFactory), typeof(ExchangeServiceFactory), ServiceLifetime.Scoped),
+            (typeof(ExceptionHandlingMiddleware), typeof(ExceptionHandlingMiddleware), ServiceLifetime.Transient)
             // (typeof(Func<ApiSourceType, IExchangeService>), null, ServiceLifetime.Scoped)
         };
 

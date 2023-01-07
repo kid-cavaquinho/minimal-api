@@ -1,6 +1,5 @@
 ﻿using System.Net;
 using System.Net.Mime;
-using Exchange.Domain;
 using Exchange.Domain.Interfaces;
 using Exchange.Infrastructure.Options;
 using Exchange.Infrastructure.Services;
