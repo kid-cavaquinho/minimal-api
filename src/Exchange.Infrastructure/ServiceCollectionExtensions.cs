@@ -1,7 +1,8 @@
 ﻿using System.Net;
 using System.Net.Mime;
-using Exchange.Domain.Interfaces;
-using Exchange.Infrastructure.Options;
+using Exchange.Core.Options;
+using Exchange.Core.Ports;
+using Exchange.Infrastructure.Adapters;
 using Exchange.Infrastructure.Services;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
@@ -34,8 +35,9 @@ public static class ServiceCollectionExtensions
         // Transient lifetime: Objects are always different; a new instance is provided to every controller and every service.
         // Singleton lifetime: Objects are the same for every object and every request.
        
-        services.AddScoped<IExchangeService, CoinMarketCapService>();
-        services.AddScoped<IExchangeService, ExchangeRatesService>();
+        
+        // services.AddScoped<IExchangeService, CoinMarketCapService>();
+        // services.AddScoped<IExchangeService, ExchangeRatesService>();
         
         // Factory solution
         // - Easy to implement
@@ -43,7 +45,7 @@ public static class ServiceCollectionExtensions
         // - Retrieval logic is contained in a single place
         // - Every implementation is instantiated (as part of IEnumerable) even if not required or used. This could have an impact on performance and memory usage.
         // - Slightly slower, and slightly using more memory than injecting an IEnumerable approach (due to the extra layer between the handler and the IEnumerable collection)
-        services.AddScoped<IExchangeServiceFactory, ExchangeServiceFactory>();
+        // services.AddScoped<IExchangeServiceFactory, ExchangeServiceFactory>();
         
         // This method uses the baked-in dependency services to register a generic delegate `func` which returns an interface implementation depending on a specific enum value.
         // services.AddScoped<Func<ApiSourceType, IExchangeService>>(serviceProvider => type =>
@@ -60,7 +62,7 @@ public static class ServiceCollectionExtensions
         // - The app requires many distinct uses of HttpClient.
         // - Many HttpClient instances have different configuration.
         // https://learn.microsoft.com/en-us/dotnet/core/extensions/httpclient-factory#named-clients
-        services.AddHttpClient(nameof(CoinMarketCapService), (sp, httpClient) =>
+        services.AddHttpClient("coinmarketcap", (sp, httpClient) =>
         {
             var coinMarketCapOptions = sp.GetRequiredService<IOptions<CoinMarketCapApiOptions>>().Value;
             httpClient.BaseAddress = coinMarketCapOptions.BaseAddress;
@@ -76,16 +78,16 @@ public static class ServiceCollectionExtensions
             AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate
         });
 
-        services.AddHttpClient(nameof(ExchangeRatesService), (sp, httpClient) =>
-        {
-            var exchangeRatesOptions = sp.GetRequiredService<IOptions<ExchangeRateApiOptions>>().Value;
-            httpClient.BaseAddress = exchangeRatesOptions.BaseAddress;
-            httpClient.DefaultRequestHeaders.Add(HeaderNames.Accept, MediaTypeNames.Application.Json);
-            httpClient.DefaultRequestHeaders.Add(HeaderNames.AcceptEncoding, "deflate, gzip");
-            httpClient.DefaultRequestHeaders.Add("apikey", exchangeRatesOptions.Key);
-        }).ConfigurePrimaryHttpMessageHandler(() => new HttpClientHandler
-        {
-            AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate
-        });
+        // services.AddHttpClient(nameof(ExchangeRatesService), (sp, httpClient) =>
+        // {
+        //     var exchangeRatesOptions = sp.GetRequiredService<IOptions<ExchangeRateApiOptions>>().Value;
+        //     httpClient.BaseAddress = exchangeRatesOptions.BaseAddress;
+        //     httpClient.DefaultRequestHeaders.Add(HeaderNames.Accept, MediaTypeNames.Application.Json);
+        //     httpClient.DefaultRequestHeaders.Add(HeaderNames.AcceptEncoding, "deflate, gzip");
+        //     httpClient.DefaultRequestHeaders.Add("apikey", exchangeRatesOptions.Key);
+        // }).ConfigurePrimaryHttpMessageHandler(() => new HttpClientHandler
+        // {
+        //     AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate
+        // });
     }
 }

@@ -1,4 +1,4 @@
-﻿namespace Exchange.Infrastructure.Options;
+﻿namespace Exchange.Core.Options;
 
 public class ExchangeRateApiOptions
 {

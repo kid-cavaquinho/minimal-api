@@ -1,6 +1,4 @@
-﻿using Exchange.Domain;
-
-namespace Exchange.Infrastructure.Options;
+﻿namespace Exchange.Core.Options;
 
 public class ApiOptions
 {

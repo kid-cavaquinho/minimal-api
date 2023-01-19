@@ -1,4 +1,6 @@
-﻿using Serilog;
+﻿using Asp.Versioning.Conventions;
+using Exchange.Api.Modules;
+using Serilog;
 
 namespace Exchange.Api.Extensions;
 
@@ -16,5 +18,24 @@ public static class WebApplicationBuilderExtensions
         });
         
         return builder;
+    }
+    
+    public static void MapEndpoints(this WebApplication app)
+    {
+        var apiVersionSet = app.NewApiVersionSet()
+            .HasApiVersion(1, 0)
+            .ReportApiVersions()
+            .Build();
+        
+        var modules = typeof(IModule).Assembly
+            .GetTypes()
+            .Where(p => p.IsClass && p.IsAssignableTo(typeof(IModule)))
+            .Select(Activator.CreateInstance)
+            .Cast<IModule>();
+        
+        foreach (var module in modules)
+        {
+            module.MapEndpoints(app, apiVersionSet);
+        }
     }
 }

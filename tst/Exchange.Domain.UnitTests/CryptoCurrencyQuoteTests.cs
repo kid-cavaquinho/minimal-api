@@ -1,4 +1,5 @@
 using AutoFixture.Xunit2;
+using Exchange.Core;
 using Xunit;
 
 namespace Exchange.Domain.UnitTests;
