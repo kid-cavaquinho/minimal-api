@@ -17,7 +17,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		NuGet.config = NuGet.config
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Exchange.Domain.UnitTests", "tst\Exchange.Domain.UnitTests\Exchange.Domain.UnitTests.csproj", "{7A32B5B5-60F0-43EB-AD24-BBF21C1E3CED}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Exchange.Core.UnitTests", "tst\Exchange.Core.UnitTests\Exchange.Core.UnitTests.csproj", "{7A32B5B5-60F0-43EB-AD24-BBF21C1E3CED}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Exchange.Infrastructure.UnitTests", "tst\Exchange.Infrastructure.UnitTests\Exchange.Infrastructure.UnitTests.csproj", "{D518B577-732E-4DC2-B76E-7628BD40693A}"
 EndProject
