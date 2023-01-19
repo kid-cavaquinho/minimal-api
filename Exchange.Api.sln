@@ -4,7 +4,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{1B6F135C-3D8
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Exchange.Api", "src\Exchange.Api\Exchange.Api.csproj", "{A930A43B-16D2-407E-A8AD-EC2ABFD53557}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Exchange.Domain", "src\Exchange.Domain\Exchange.Domain.csproj", "{71F4E1BF-B638-4A9F-B186-E73ADA3E10DA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Exchange.Core", "src\Exchange.Core\Exchange.Core.csproj", "{71F4E1BF-B638-4A9F-B186-E73ADA3E10DA}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Exchange.Infrastructure", "src\Exchange.Infrastructure\Exchange.Infrastructure.csproj", "{9F5D95C2-A60A-4E61-9487-10A6F3134DDE}"
 EndProject
