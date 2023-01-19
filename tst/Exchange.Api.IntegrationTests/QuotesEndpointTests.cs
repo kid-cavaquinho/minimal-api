@@ -1,8 +1,8 @@
 ﻿using System.Net;
 using System.Net.Http.Json;
 using Exchange.Api.IntegrationTests.Stubs;
-using Exchange.Domain;
-using Exchange.Domain.Interfaces;
+using Exchange.Core;
+using Exchange.Core.Ports;
 using FluentAssertions;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.AspNetCore.TestHost;
@@ -21,8 +21,7 @@ public class QuotesEndpointTests
         {
             builder.ConfigureTestServices(services =>
             {
-                services.Replace(ServiceDescriptor.Scoped(_ => 
-                    new Func<ApiSourceType, IExchangeService>(_ => new ExchangeServiceStub())));
+                services.Replace(ServiceDescriptor.Scoped(_ => new Func<ApiSourceType, IExchangeRepository>(_ => new ExchangeRepositoryStub())));
             });
         });
 

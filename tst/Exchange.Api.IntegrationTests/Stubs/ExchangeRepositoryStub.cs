@@ -1,9 +1,9 @@
-﻿using Exchange.Domain;
-using Exchange.Domain.Interfaces;
+﻿using Exchange.Core;
+using Exchange.Core.Ports;
 
 namespace Exchange.Api.IntegrationTests.Stubs;
 
-internal class ExchangeServiceStub : IExchangeService
+internal class ExchangeRepositoryStub : IExchangeRepository
 {
     public Task<Metadata?> GetInfoAsync(CryptoCurrencySymbol currencySymbol, CancellationToken cancellationToken = default)
     {

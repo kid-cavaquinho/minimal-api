@@ -1,12 +1,9 @@
 ﻿using System.Text;
 using Exchange.Api.Middlewares;
-using Exchange.Domain.Interfaces;
-using Exchange.Infrastructure;
-using Exchange.Infrastructure.Services;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.DependencyInjection;
-using NUnit.Framework;
+using Xunit;
 
 namespace Exchange.Api.IntegrationTests;
 
@@ -14,14 +11,11 @@ public class DependencyTests
 {
     private readonly List<(Type ServiceType, Type? ImplType, ServiceLifetime ServiceLifeTime)> _descriptors = new()
         {
-            (typeof(IExchangeService), typeof(CoinMarketCapService), ServiceLifetime.Scoped),
-            (typeof(IExchangeService), typeof(ExchangeRatesService), ServiceLifetime.Scoped),
-            (typeof(IExchangeServiceFactory), typeof(ExchangeServiceFactory), ServiceLifetime.Scoped),
             (typeof(ExceptionHandlingMiddleware), typeof(ExceptionHandlingMiddleware), ServiceLifetime.Transient)
             // (typeof(Func<ApiSourceType, IExchangeService>), null, ServiceLifetime.Scoped)
         };
 
-    [TestCase]
+    [Fact]
     public void RegisterValidation()
     {
         var factory = new WebApplicationFactory<Program>().WithWebHostBuilder(builder =>
@@ -31,10 +25,8 @@ public class DependencyTests
                 var services = serviceCollection.ToList();
                 
                 var result = ValidateServices(services);
-                if (result.Success)
-                    Assert.Pass();    
-                
-                Assert.Fail(result.Message);
+                if (!result.Success)
+                    Assert.Fail(result.Message);
             });
         });
 
