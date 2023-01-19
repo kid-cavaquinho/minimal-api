@@ -1,8 +1,10 @@
 ﻿using System.Net.Mime;
 using Asp.Versioning.Builder;
+using Exchange.Api.Modules.Quotes.Endpoints;
 using Exchange.Core;
 using Exchange.Core.Options;
 using Exchange.Core.Ports;
+using Exchange.Core.Ports.UseCases;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 
@@ -12,15 +14,19 @@ internal sealed class QuotesModule : IModule
 {
     public void AddModule(IServiceCollection services)
     {
-        throw new NotImplementedException();
+        services.AddScoped<IGetQuotesUseCase, GetQuotesUseCase>();
     }
 
     public void MapEndpoints(IEndpointRouteBuilder app, ApiVersionSet apiVersionSet)
     {
          app.MapGet("quotes/{cryptocurrencyCode:required}", async ([FromRoute] string cryptocurrencyCode,
-            [FromServices] IExchangeRepositoryFactory factory,
-            [FromServices] IOptions<ApiOptions> options,
-            CancellationToken cancellationToken) => TypedResults.Ok(await factory.GetInstance(options.Value.Default).GetQuotesAsync(new CryptoCurrencySymbol(cryptocurrencyCode), cancellationToken)))
+                 [FromServices] IExchangeRepositoryFactory factory,
+                 [FromServices] IOptions<ApiOptions> options,
+                 CancellationToken cancellationToken) =>
+             {
+                 await Task.Delay(1);
+                 return "hello world";
+             })// TypedResults.Ok(await factory.GetInstance(options.Value.Default).GetQuotesAsync(new CryptoCurrencySymbol(cryptocurrencyCode), cancellationToken)))
         .WithTags("Quotes")
         .WithName("Quotes")
         .WithOpenApi(operation => new(operation)

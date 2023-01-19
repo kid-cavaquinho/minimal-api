@@ -1,21 +1,23 @@
 ﻿using System.Net.Http.Json;
 using System.Text.Json;
+using Exchange.Core.Ports;
 using Microsoft.Extensions.Logging;
 
 namespace Exchange.Infrastructure.Services;
 
-public abstract class HttpService
+public sealed class CoinMarketCapHttpService : IHttpService
 {
+    private readonly ILogger<CoinMarketCapHttpService> _logger;
     private readonly HttpClient _httpClient;
-    private readonly ILogger<HttpService> _logger;
 
-    protected HttpService(ILogger<HttpService> logger, IHttpClientFactory httpClientFactory, string httpClientName)
+    public CoinMarketCapHttpService(ILogger<CoinMarketCapHttpService> logger, HttpClient httpClient)
     {
+        _httpClient = httpClient;
         _logger = logger;
-        _httpClient = httpClientFactory.CreateClient(httpClientName);
     }
 
-    internal async Task<T?> SendAsync<T>(HttpRequestMessage httpRequestMessage, CancellationToken cancellationToken = default)
+
+    public async Task<T?> SendAsync<T>(HttpRequestMessage httpRequestMessage, CancellationToken cancellationToken = default)
     {
         try
         {

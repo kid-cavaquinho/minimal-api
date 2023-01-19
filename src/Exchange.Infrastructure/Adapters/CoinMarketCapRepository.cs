@@ -2,21 +2,21 @@
 using Exchange.Core.Ports;
 using Exchange.Core.Ports.DTOs;
 using Exchange.Infrastructure.Services;
-using Microsoft.Extensions.Logging;
 
 namespace Exchange.Infrastructure.Adapters;
 
-// Todo : Prefer composition over inheritance
-public sealed class CoinMarketCapRepository : HttpService, IExchangeRepository
+public sealed class CoinMarketCapRepository : IExchangeRepository
 {
-    public CoinMarketCapRepository(ILogger<CoinMarketCapRepository> logger, IHttpClientFactory httpClientFactory) : base(logger, httpClientFactory, nameof(CoinMarketCapRepository))
+    private readonly CoinMarketCapHttpService _httpClient;
+    public CoinMarketCapRepository(CoinMarketCapHttpService httpClient)
     {
+        _httpClient = httpClient;
     }
-    
+
     public async Task<Metadata?> GetMetadataAsync(CryptoCurrencySymbol cryptoCurrencySymbol, CancellationToken cancellationToken = default)
     {
         var requestUri = $"v2/cryptocurrency/info?symbol={cryptoCurrencySymbol.Value}";
-        var response = await SendAsync<CoinMarketCapMetadata>(new HttpRequestMessage(HttpMethod.Get, requestUri), cancellationToken);
+        var response = await _httpClient.SendAsync<CoinMarketCapMetadata>(new HttpRequestMessage(HttpMethod.Get, requestUri), cancellationToken);
         if (response is null)
             return default;
 
@@ -36,6 +36,7 @@ public sealed class CoinMarketCapRepository : HttpService, IExchangeRepository
         if (coinMarketCapCryptoCurrencyId is null)
             return new CryptoCurrencyQuote(cryptoCurrencySymbol.Value, Enumerable.Empty<Quote>());
 
+        // Todo: Move this to domain
         var coinMarketCapCurrencies = new[] 
         { 
             CoinMarketCapCurrencyId.Aud,
@@ -59,7 +60,7 @@ public sealed class CoinMarketCapRepository : HttpService, IExchangeRepository
     private async Task<(string currency, decimal? quote)> GetQuotePriceAsync(int currencyId, (int Id, string Name) convertCurrency, CancellationToken cancellationToken = default)
     {
         var requestUri = $"v2/cryptocurrency/quotes/latest?id={currencyId}&convert_id={convertCurrency.Id}";
-        var result = await SendAsync<CoinMarketCapLatestQuotes>(new HttpRequestMessage(HttpMethod.Get, requestUri), cancellationToken);
+        var result = await _httpClient.SendAsync<CoinMarketCapLatestQuotes>(new HttpRequestMessage(HttpMethod.Get, requestUri), cancellationToken);
         var quotePrice = result?.Data[currencyId.ToString()]?["quote"]![convertCurrency.Id.ToString()]?["price"]?.GetValue<decimal>();
         return (convertCurrency.Name, quotePrice);
     }
