@@ -1,6 +1,6 @@
-﻿namespace Exchange.Domain.Interfaces;
+﻿namespace Exchange.Core.Ports;
 
-public interface IExchangeService
+public interface IExchangeRepository
 {
     Task<Metadata?> GetInfoAsync(CryptoCurrencySymbol cryptoCurrencySymbol, CancellationToken cancellationToken = default);
 

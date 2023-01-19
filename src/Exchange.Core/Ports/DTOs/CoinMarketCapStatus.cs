@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace Exchange.Infrastructure.Services;
+namespace Exchange.Core.Ports.DTOs;
 
 public sealed class CoinMarketCapStatus
 {

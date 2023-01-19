@@ -1,4 +1,4 @@
-﻿namespace Exchange.Domain;
+﻿namespace Exchange.Core;
 
 public sealed class CryptoCurrencyQuote
 {

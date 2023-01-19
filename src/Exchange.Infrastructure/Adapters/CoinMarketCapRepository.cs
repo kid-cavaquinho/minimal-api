@@ -1,12 +1,14 @@
-﻿using Exchange.Domain;
-using Exchange.Domain.Interfaces;
+﻿using Exchange.Core;
+using Exchange.Core.Ports;
+using Exchange.Core.Ports.DTOs;
+using Exchange.Infrastructure.Services;
 using Microsoft.Extensions.Logging;
 
-namespace Exchange.Infrastructure.Services;
+namespace Exchange.Infrastructure.Adapters;
 
-public sealed class CoinMarketCapService : HttpService, IExchangeService
+public sealed class CoinMarketCapRepository : HttpService, IExchangeRepository
 {
-    public CoinMarketCapService(ILogger<CoinMarketCapService> logger, IHttpClientFactory httpClientFactory) : base(logger, httpClientFactory, nameof(CoinMarketCapService))
+    public CoinMarketCapRepository(ILogger<CoinMarketCapRepository> logger, IHttpClientFactory httpClientFactory) : base(logger, httpClientFactory, nameof(CoinMarketCapRepository))
     {
     }
     

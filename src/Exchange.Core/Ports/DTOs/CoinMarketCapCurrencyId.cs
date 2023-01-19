@@ -1,4 +1,4 @@
-﻿namespace Exchange.Infrastructure.Services;
+﻿namespace Exchange.Core.Ports.DTOs;
 
 public static class CoinMarketCapCurrencyId
 {
