@@ -19,6 +19,6 @@ public class GetMetadataUseCase : IGetMetadataUseCase
 
     public async Task<Core.Metadata?> Handle(string cryptocurrencyCode, CancellationToken cancellationToken = default)
     {
-        return await _factory.GetInstance(_options.Default).GetInfoAsync(new CryptoCurrencySymbol(cryptocurrencyCode), cancellationToken);
+        return await _factory.GetInstance(_options.Default).GetMetadataAsync(new CryptoCurrencySymbol(cryptocurrencyCode), cancellationToken);
     }
 }

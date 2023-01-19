@@ -5,7 +5,7 @@ namespace Exchange.Api.IntegrationTests.Stubs;
 
 internal class ExchangeRepositoryStub : IExchangeRepository
 {
-    public Task<Metadata?> GetInfoAsync(CryptoCurrencySymbol currencySymbol, CancellationToken cancellationToken = default)
+    public Task<Metadata?> GetMetadataAsync(CryptoCurrencySymbol currencySymbol, CancellationToken cancellationToken = default)
     {
         throw new NotImplementedException();
     }

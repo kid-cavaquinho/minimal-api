@@ -7,11 +7,12 @@ var builder = WebApplication.CreateBuilder(args).UseSerilog();
 
 builder.Services.AddSwagger();
 builder.Services.AddMiddleware();
+
 builder.Services.AddOptions<ApiOptions>().BindConfiguration(nameof(ApiOptions),
         options => options.ErrorOnUnknownConfiguration = true)
     .ValidateOnStart();
+
 builder.Services.AddModules();
-// builder.Services.AddInfrastructure();
 
 var app = builder.Build();
 if (app.Environment.IsDevelopment())
@@ -25,9 +26,6 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseMiddleware<ExceptionHandlingMiddleware>();
-// app.UseHttpsRedirection();
-// app.UseMetadataEndpoint();
-// app.UseQuotesEndpoint();
 app.MapEndpoints();
 
 var logger = new LoggerConfiguration().ReadFrom.Configuration(builder.Configuration).CreateLogger();

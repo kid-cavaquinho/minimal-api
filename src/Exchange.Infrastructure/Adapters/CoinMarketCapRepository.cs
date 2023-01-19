@@ -6,13 +6,14 @@ using Microsoft.Extensions.Logging;
 
 namespace Exchange.Infrastructure.Adapters;
 
+// Todo : Prefer composition over inheritance
 public sealed class CoinMarketCapRepository : HttpService, IExchangeRepository
 {
     public CoinMarketCapRepository(ILogger<CoinMarketCapRepository> logger, IHttpClientFactory httpClientFactory) : base(logger, httpClientFactory, nameof(CoinMarketCapRepository))
     {
     }
     
-    public async Task<Metadata?> GetInfoAsync(CryptoCurrencySymbol cryptoCurrencySymbol, CancellationToken cancellationToken = default)
+    public async Task<Metadata?> GetMetadataAsync(CryptoCurrencySymbol cryptoCurrencySymbol, CancellationToken cancellationToken = default)
     {
         var requestUri = $"v2/cryptocurrency/info?symbol={cryptoCurrencySymbol.Value}";
         var response = await SendAsync<CoinMarketCapMetadata>(new HttpRequestMessage(HttpMethod.Get, requestUri), cancellationToken);
@@ -65,7 +66,7 @@ public sealed class CoinMarketCapRepository : HttpService, IExchangeRepository
     
     private async Task<int?> GetCurrencyId(CryptoCurrencySymbol cryptoCurrencySymbol, CancellationToken cancellationToken = default)
     {
-        var response = await GetInfoAsync(cryptoCurrencySymbol, cancellationToken);
+        var response = await GetMetadataAsync(cryptoCurrencySymbol, cancellationToken);
         return response?.Id;
     }
 }

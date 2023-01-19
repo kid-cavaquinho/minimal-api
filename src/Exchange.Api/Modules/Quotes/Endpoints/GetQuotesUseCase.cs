@@ -2,9 +2,9 @@
 using Exchange.Core.Ports;
 using Exchange.Core.Ports.UseCases;
 
-namespace Exchange.Api.Modules.Metadata.Endpoints;
+namespace Exchange.Api.Modules.Quotes.Endpoints;
 
-public class GetQuotesUseCase : IGetQuotesUseCase
+public sealed class GetQuotesUseCase : IGetQuotesUseCase
 {
     private readonly IExchangeRepositoryFactory _factory;
 
