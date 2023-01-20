@@ -2,5 +2,5 @@
 
 public interface IGetQuotesUseCase
 {
-    Task<string> GetQuotesAsync(CryptoCurrencySymbol cryptoCurrencySymbol, CancellationToken cancellationToken);
+    Task<string> Handle(CryptoCurrencySymbol cryptoCurrencySymbol, CancellationToken cancellationToken);
 }

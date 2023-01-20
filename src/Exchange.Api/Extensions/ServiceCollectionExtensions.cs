@@ -1,11 +1,65 @@
-﻿using Exchange.Api.Middlewares;
+﻿using System.Net;
+using System.Net.Mime;
+using Exchange.Api.Middlewares;
 using Exchange.Api.Modules;
+using Exchange.Core.Options;
+using Exchange.Core.Ports;
+using Exchange.Infrastructure;
+using Exchange.Infrastructure.Adapters;
+using Exchange.Infrastructure.Services;
+using Microsoft.Extensions.Options;
+using Microsoft.Net.Http.Headers;
 using Microsoft.OpenApi.Models;
 
 namespace Exchange.Api.Extensions;
 
 public static class ServiceCollectionExtensions
 {
+    internal static void AddKernel(this IServiceCollection services)
+    {
+        services.AddOptions<ApiOptions>().BindConfiguration(nameof(ApiOptions),
+                options => options.ErrorOnUnknownConfiguration = true)
+            .ValidateOnStart();
+        
+        services.AddScoped<IExchangeRepositoryFactory, ExchangeRepositoryFactory>();
+        services.AddScoped<IExchangeRepository, CoinMarketCapRepository>();
+        services.AddScoped<IExchangeRepository, ExchangeRateRepository>();
+        
+        services.AddOptions<CoinMarketCapApiOptions>().BindConfiguration(nameof(CoinMarketCapApiOptions),
+                options => options.ErrorOnUnknownConfiguration = true)
+            .Validate(options => !string.IsNullOrEmpty(options.Key))
+            .ValidateOnStart();
+        
+        services.AddHttpClient<CoinMarketCapHttpService>((sp, httpClient) =>
+        {
+            var options = sp.GetRequiredService<IOptions<CoinMarketCapApiOptions>>().Value;
+            httpClient.BaseAddress = options.BaseAddress;
+            httpClient.DefaultRequestHeaders.Add(HeaderNames.Accept, MediaTypeNames.Application.Json); 
+            httpClient.DefaultRequestHeaders.Add(HeaderNames.AcceptEncoding, "deflate, gzip");
+            httpClient.DefaultRequestHeaders.Add("X-CMC_PRO_API_KEY", options.Key);
+        }).ConfigurePrimaryHttpMessageHandler(() => new HttpClientHandler
+        {
+            AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate
+        });
+        
+        services.AddOptions<ExchangeRateApiOptions>().BindConfiguration(nameof(ExchangeRateApiOptions),
+                options => options.ErrorOnUnknownConfiguration = true)
+            .Validate(options => !string.IsNullOrEmpty(options.Key))
+            .ValidateOnStart();
+        
+        services.AddHttpClient<ExchangeRateRepository>((sp, httpClient) =>
+        {
+            var options = sp.GetRequiredService<IOptions<ExchangeRateApiOptions>>().Value;
+            httpClient.BaseAddress = options.BaseAddress;
+            httpClient.DefaultRequestHeaders.Add(HeaderNames.Accept, MediaTypeNames.Application.Json); 
+            httpClient.DefaultRequestHeaders.Add(HeaderNames.AcceptEncoding, "deflate, gzip");
+            httpClient.DefaultRequestHeaders.Add("apikey", options.Key);
+        }).ConfigurePrimaryHttpMessageHandler(() => new HttpClientHandler
+        {
+            AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate
+        });
+    }
+
     internal static void AddModules(this IServiceCollection services)
     {
         var modules = typeof(IModule).Assembly

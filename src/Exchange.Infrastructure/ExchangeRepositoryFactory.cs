@@ -18,7 +18,7 @@ public sealed class ExchangeRepositoryFactory : IExchangeRepositoryFactory
         return type switch
         {
             ApiSourceType.CoinMarketCapApi => _repositories.First(x => x is CoinMarketCapRepository),
-            // ApiSourceType.ExchangeRatesApi => _exchangeServices.First(x => x is ExchangeRatesService),
+            ApiSourceType.ExchangeRateApi => _repositories.First(x => x is ExchangeRateRepository),
             _ => throw new ArgumentOutOfRangeException(nameof(type), type, null)
         };
     }

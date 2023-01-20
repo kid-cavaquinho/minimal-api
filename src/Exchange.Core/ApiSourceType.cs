@@ -3,5 +3,5 @@
 public enum ApiSourceType
 {
     CoinMarketCapApi,
-    ExchangeRatesApi,
+    ExchangeRateApi,
 }

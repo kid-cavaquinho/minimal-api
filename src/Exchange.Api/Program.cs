@@ -8,10 +8,7 @@ var builder = WebApplication.CreateBuilder(args).UseSerilog();
 builder.Services.AddSwagger();
 builder.Services.AddMiddleware();
 
-builder.Services.AddOptions<ApiOptions>().BindConfiguration(nameof(ApiOptions),
-        options => options.ErrorOnUnknownConfiguration = true)
-    .ValidateOnStart();
-
+builder.Services.AddKernel();
 builder.Services.AddModules();
 
 var app = builder.Build();

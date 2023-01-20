@@ -5,7 +5,7 @@ namespace Exchange.Api.Modules.Quotes.Endpoints;
 
 public sealed class GetQuotesUseCase : IGetQuotesUseCase
 {
-    public Task<string> GetQuotesAsync(CryptoCurrencySymbol cryptoCurrencySymbol, CancellationToken cancellationToken)
+    public Task<string> Handle(CryptoCurrencySymbol cryptoCurrencySymbol, CancellationToken cancellationToken)
     {
         throw new NotImplementedException();
     }

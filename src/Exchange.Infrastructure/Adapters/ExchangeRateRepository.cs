@@ -6,9 +6,9 @@ using Microsoft.Extensions.Logging;
 
 namespace Exchange.Infrastructure.Adapters;
 
-public sealed class ExchangeRatesRepository : HttpService, IExchangeRepository
+public sealed class ExchangeRateRepository : HttpService, IExchangeRepository
 {
-    public ExchangeRatesRepository(ILoggerFactory loggerFactory, HttpClient httpClient) : base(loggerFactory, httpClient)
+    public ExchangeRateRepository(ILoggerFactory loggerFactory, HttpClient httpClient) : base(loggerFactory, httpClient)
     {
     }
     

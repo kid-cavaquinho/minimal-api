@@ -20,12 +20,10 @@ internal sealed class QuotesModule : IModule
     public void MapEndpoints(IEndpointRouteBuilder app, ApiVersionSet apiVersionSet)
     {
          app.MapGet("quotes/{cryptocurrencyCode:required}", async ([FromRoute] string cryptocurrencyCode,
-                 [FromServices] IExchangeRepositoryFactory factory,
-                 [FromServices] IOptions<ApiOptions> options,
+                 [FromServices] IGetQuotesUseCase _useCase,
                  CancellationToken cancellationToken) =>
              {
-                 await Task.Delay(1);
-                 return "hello world";
+                 return await _useCase.Handle(new CryptoCurrencySymbol(cryptocurrencyCode), cancellationToken);
              })// TypedResults.Ok(await factory.GetInstance(options.Value.Default).GetQuotesAsync(new CryptoCurrencySymbol(cryptocurrencyCode), cancellationToken)))
         .WithTags("Quotes")
         .WithName("Quotes")
