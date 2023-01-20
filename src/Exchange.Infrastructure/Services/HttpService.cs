@@ -1,5 +1,4 @@
-﻿using System.Net;
-using System.Net.Http.Json;
+﻿using System.Net.Http.Json;
 using System.Text.Json;
 using Microsoft.Extensions.Logging;
 
@@ -10,13 +9,13 @@ public abstract class HttpService
     private readonly ILogger<HttpClient> _logger;
     private readonly HttpClient _httpClient;
 
-    protected HttpService(ILoggerFactory loggerFactory, HttpClient httpClient)
+    protected HttpService(ILoggerFactory loggerFactory, IHttpClientFactory httpClientFactory, string httpClientName)
     {
+        _httpClient = httpClientFactory.CreateClient(httpClientName);
         _logger = loggerFactory.CreateLogger<HttpClient>();
-        _httpClient = httpClient;
     }
 
-    public async Task<T?> SendAsync<T>(HttpRequestMessage httpRequestMessage, CancellationToken cancellationToken = default)
+    protected async Task<T?> SendAsync<T>(HttpRequestMessage httpRequestMessage, CancellationToken cancellationToken = default)
     {
         try
         {

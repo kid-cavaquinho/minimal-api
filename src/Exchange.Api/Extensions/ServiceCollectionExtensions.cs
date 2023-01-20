@@ -30,7 +30,7 @@ public static class ServiceCollectionExtensions
             .Validate(options => !string.IsNullOrEmpty(options.Key))
             .ValidateOnStart();
         
-        services.AddHttpClient<CoinMarketCapHttpService>((sp, httpClient) =>
+        services.AddHttpClient(nameof(CoinMarketCapRepository), (sp, httpClient) =>
         {
             var options = sp.GetRequiredService<IOptions<CoinMarketCapApiOptions>>().Value;
             httpClient.BaseAddress = options.BaseAddress;
@@ -47,7 +47,7 @@ public static class ServiceCollectionExtensions
             .Validate(options => !string.IsNullOrEmpty(options.Key))
             .ValidateOnStart();
         
-        services.AddHttpClient<ExchangeRateRepository>((sp, httpClient) =>
+        services.AddHttpClient(nameof(ExchangeRateRepository), (sp, httpClient) =>
         {
             var options = sp.GetRequiredService<IOptions<ExchangeRateApiOptions>>().Value;
             httpClient.BaseAddress = options.BaseAddress;

@@ -8,7 +8,7 @@ namespace Exchange.Infrastructure.Adapters;
 
 public sealed class ExchangeRateRepository : HttpService, IExchangeRepository
 {
-    public ExchangeRateRepository(ILoggerFactory loggerFactory, HttpClient httpClient) : base(loggerFactory, httpClient)
+    public ExchangeRateRepository(ILoggerFactory loggerFactory, IHttpClientFactory httpClientFactory) : base(loggerFactory, httpClientFactory, nameof(ExchangeRateRepository))
     {
     }
     
