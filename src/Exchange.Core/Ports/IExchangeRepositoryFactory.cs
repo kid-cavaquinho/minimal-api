@@ -2,5 +2,5 @@
 
 public interface IExchangeRepositoryFactory
 {
-    IExchangeRepository GetInstance(ApiSourceType type); 
+    IExchangeRepository GetInstance(); 
 }
