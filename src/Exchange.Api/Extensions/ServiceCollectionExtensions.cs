@@ -6,7 +6,6 @@ using Exchange.Core.Options;
 using Exchange.Core.Ports;
 using Exchange.Infrastructure;
 using Exchange.Infrastructure.Adapters;
-using Exchange.Infrastructure.Services;
 using Microsoft.Extensions.Options;
 using Microsoft.Net.Http.Headers;
 using Microsoft.OpenApi.Models;
