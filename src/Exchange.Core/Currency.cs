@@ -4,7 +4,7 @@ public enum Currency
 {
     Usd,
     Aud,
-    Blr,
+    Brl,
     Eur,
-    Gpb,
+    Gbp,
 }
