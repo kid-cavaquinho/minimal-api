@@ -22,7 +22,7 @@ public static class ServiceCollectionExtensions
             
             return type switch
             {
-                ApiSourceType.ExchangeRateApi => serviceProvider.GetRequiredService<ExchangeRateRepository>(),
+                ApiSourceType.ExchangeRatesApi => serviceProvider.GetRequiredService<ExchangeRatesRepository>(),
                 ApiSourceType.CoinMarketCapApi => serviceProvider.GetRequiredService<CoinMarketCapRepository>(),
                 _ => serviceProvider.GetRequiredService<CoinMarketCapRepository>()
             };
@@ -32,7 +32,7 @@ public static class ServiceCollectionExtensions
                 options => options.ErrorOnUnknownConfiguration = true)
             .ValidateOnStart();
         
-        services.AddScoped<ExchangeRateRepository>();
+        services.AddScoped<ExchangeRatesRepository>();
         services.AddScoped<CoinMarketCapRepository>();
         
         services.AddOptions<CoinMarketCapApiOptions>().BindConfiguration(nameof(CoinMarketCapApiOptions),
@@ -52,14 +52,14 @@ public static class ServiceCollectionExtensions
             AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate
         });
         
-        services.AddOptions<ExchangeRateApiOptions>().BindConfiguration(nameof(ExchangeRateApiOptions),
+        services.AddOptions<ExchangeRatesApiOptions>().BindConfiguration(nameof(ExchangeRatesApiOptions),
                 options => options.ErrorOnUnknownConfiguration = true)
             .Validate(options => !string.IsNullOrEmpty(options.Key))
             .ValidateOnStart();
         
-        services.AddHttpClient(nameof(ExchangeRateRepository), (sp, httpClient) =>
+        services.AddHttpClient(nameof(ExchangeRatesRepository), (sp, httpClient) =>
         {
-            var options = sp.GetRequiredService<IOptions<ExchangeRateApiOptions>>().Value;
+            var options = sp.GetRequiredService<IOptions<ExchangeRatesApiOptions>>().Value;
             httpClient.BaseAddress = options.BaseAddress;
             httpClient.DefaultRequestHeaders.Add(HeaderNames.Accept, MediaTypeNames.Application.Json); 
             httpClient.DefaultRequestHeaders.Add(HeaderNames.AcceptEncoding, "deflate, gzip");
