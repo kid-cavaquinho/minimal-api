@@ -7,7 +7,6 @@ var builder = WebApplication.CreateBuilder(args).UseSerilog();
 
 builder.Services.AddSwagger();
 builder.Services.AddMiddleware();
-
 builder.Services.AddKernel();
 builder.Services.AddModules();
 
