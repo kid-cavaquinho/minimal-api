@@ -2,7 +2,7 @@
 using Asp.Versioning.Builder;
 using Exchange.Api.Modules.Quotes.Endpoints;
 using Exchange.Core;
-using Exchange.Core.Ports.UseCases;
+using Exchange.Core.Ports;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Exchange.Api.Modules.Quotes;
@@ -19,7 +19,7 @@ internal sealed class QuotesModule : IModule
          app.MapGet("quotes/{cryptocurrencyCode:required}", async ([FromRoute] string cryptocurrencyCode,
                  [FromServices] IGetQuotesUseCase useCase,
                  CancellationToken cancellationToken) 
-                 => await useCase.Handle(cryptocurrencyCode, cancellationToken))// TypedResults.Ok(await factory.GetInstance(options.Value.Default).GetQuotesAsync(new CryptoCurrencySymbol(cryptocurrencyCode), cancellationToken)))
+                 => await useCase.Handle(cryptocurrencyCode, cancellationToken))
         .WithTags("Quotes")
         .WithName("Quotes")
         .WithOpenApi(operation => new(operation)

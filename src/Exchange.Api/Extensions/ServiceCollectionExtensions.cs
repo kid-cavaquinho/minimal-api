@@ -2,10 +2,10 @@
 using System.Net.Mime;
 using Exchange.Api.Middlewares;
 using Exchange.Api.Modules;
+using Exchange.Core;
 using Exchange.Core.Options;
 using Exchange.Core.Ports;
-using Exchange.Infrastructure;
-using Exchange.Infrastructure.Adapters;
+using Exchange.Infrastructure.Adapters; // Should not be referenced anywhere else
 using Microsoft.Extensions.Options;
 using Microsoft.Net.Http.Headers;
 using Microsoft.OpenApi.Models;
@@ -16,13 +16,24 @@ public static class ServiceCollectionExtensions
 {
     internal static void AddKernel(this IServiceCollection services)
     {
+        services.AddScoped<IExchangeRepository>(serviceProvider => 
+        {
+            var type = serviceProvider.GetRequiredService<IOptions<ApiOptions>>().Value.Default;
+            
+            return type switch
+            {
+                ApiSourceType.ExchangeRateApi => serviceProvider.GetRequiredService<ExchangeRateRepository>(),
+                ApiSourceType.CoinMarketCapApi => serviceProvider.GetRequiredService<CoinMarketCapRepository>(),
+                _ => serviceProvider.GetRequiredService<CoinMarketCapRepository>()
+            };
+        });
+        
         services.AddOptions<ApiOptions>().BindConfiguration(nameof(ApiOptions),
                 options => options.ErrorOnUnknownConfiguration = true)
             .ValidateOnStart();
         
-        services.AddScoped<IExchangeRepositoryFactory, ExchangeRepositoryFactory>();
-        services.AddScoped<IExchangeRepository, CoinMarketCapRepository>();
-        services.AddScoped<IExchangeRepository, ExchangeRateRepository>();
+        services.AddScoped<ExchangeRateRepository>();
+        services.AddScoped<CoinMarketCapRepository>();
         
         services.AddOptions<CoinMarketCapApiOptions>().BindConfiguration(nameof(CoinMarketCapApiOptions),
                 options => options.ErrorOnUnknownConfiguration = true)

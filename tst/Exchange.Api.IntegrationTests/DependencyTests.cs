@@ -1,5 +1,9 @@
 ﻿using System.Text;
 using Exchange.Api.Middlewares;
+using Exchange.Api.Modules.Metadata.Endpoints;
+using Exchange.Api.Modules.Quotes.Endpoints;
+using Exchange.Core.Ports;
+using Exchange.Infrastructure.Adapters;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.DependencyInjection;
@@ -11,8 +15,11 @@ public class DependencyTests
 {
     private readonly List<(Type ServiceType, Type? ImplType, ServiceLifetime ServiceLifeTime)> _descriptors = new()
         {
-            (typeof(ExceptionHandlingMiddleware), typeof(ExceptionHandlingMiddleware), ServiceLifetime.Transient)
-            // (typeof(Func<ApiSourceType, IExchangeService>), null, ServiceLifetime.Scoped)
+            (typeof(ExceptionHandlingMiddleware), typeof(ExceptionHandlingMiddleware), ServiceLifetime.Transient),
+            (typeof(IGetMetadataUseCase), typeof(GetMetadataUseCase), ServiceLifetime.Scoped),
+            (typeof(IGetQuotesUseCase), typeof(GetQuotesUseCase), ServiceLifetime.Scoped),
+            (typeof(ExchangeRateRepository), typeof(ExchangeRateRepository), ServiceLifetime.Scoped),
+            (typeof(CoinMarketCapRepository), typeof(CoinMarketCapRepository), ServiceLifetime.Scoped)
         };
 
     [Fact]

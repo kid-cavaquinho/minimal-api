@@ -1,17 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using System.Net;
-using System.Net.Mime;
 using Asp.Versioning.Builder;
 using Exchange.Api.Modules.Metadata.Endpoints;
-using Exchange.Core.Options;
 using Exchange.Core.Ports;
-using Exchange.Core.Ports.UseCases;
-using Exchange.Infrastructure; // Should not be referenced anywhere else
-using Exchange.Infrastructure.Adapters;
-using Exchange.Infrastructure.Services; // Should not be referenced anywhere else
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Options;
-using Microsoft.Net.Http.Headers;
 
 namespace Exchange.Api.Modules.Metadata;
 

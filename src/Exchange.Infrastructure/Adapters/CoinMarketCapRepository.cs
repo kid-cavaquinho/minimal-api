@@ -21,8 +21,6 @@ public sealed class CoinMarketCapRepository : HttpService, IExchangeRepository
 
         var cryptocurrencyMetadataCoinMarketCap = response.CryptocurrenciesMetadata?.FirstOrDefault().Value.FirstOrDefault();
         
-        // Todo: Consider matching the symbols to assure a valid metadata response
-        
         return cryptocurrencyMetadataCoinMarketCap is null 
             ? default 
             : new Metadata(cryptocurrencyMetadataCoinMarketCap.Id, cryptocurrencyMetadataCoinMarketCap.Symbol, cryptocurrencyMetadataCoinMarketCap.Description);
@@ -51,9 +49,9 @@ public sealed class CoinMarketCapRepository : HttpService, IExchangeRepository
             tasks.Add(GetQuotePriceAsync(coinMarketCapCryptoCurrencyId.Value, coinMarketCapCurrency, cancellationToken));
         }
 
-        var quotePrices = await Task.WhenAll(tasks);
+        var quotes = await Task.WhenAll(tasks);
 
-        return new CryptoCurrencyQuote(cryptoCurrencySymbol.Value.ToUpperInvariant(), quotePrices.Select(s => new Quote(s.currency, s.quote)));
+        return new CryptoCurrencyQuote(cryptoCurrencySymbol.Value.ToUpperInvariant(), quotes.Select(s => new Quote(s.currency, s.quote)));
     }
 
     private async Task<(string currency, decimal? quote)> GetQuotePriceAsync(int currencyId, (int Id, string Name) convertCurrency, CancellationToken cancellationToken = default)

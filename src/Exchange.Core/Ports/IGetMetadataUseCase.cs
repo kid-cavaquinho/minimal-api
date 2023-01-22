@@ -1,4 +1,4 @@
-﻿namespace Exchange.Core.Ports.UseCases;
+﻿namespace Exchange.Core.Ports;
 
 public interface IGetMetadataUseCase
 {

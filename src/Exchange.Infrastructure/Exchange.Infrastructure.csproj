@@ -24,8 +24,4 @@
       <ProjectReference Include="..\Exchange.Core\Exchange.Core.csproj" />
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="Extensions" />
-    </ItemGroup>
-
 </Project>
