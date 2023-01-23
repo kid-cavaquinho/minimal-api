@@ -5,17 +5,17 @@ namespace Exchange.Api.Modules.Quotes.Endpoints;
 
 public sealed class GetQuotesUseCase : IGetQuotesUseCase
 {
-    private readonly IExchangeRepository _repository;
+    private readonly IExchangeFactory _factory;
 
-    public GetQuotesUseCase(IExchangeRepository repository)
+    public GetQuotesUseCase(IExchangeFactory factory)
     {
-        _repository = repository;
+        _factory = factory;
     }
 
     public async Task<CryptoCurrencyQuote> Handle(string cryptocurrencyCode, CancellationToken cancellationToken)
     {
         var cryptoCurrencySymbol = new CryptoCurrencySymbol(cryptocurrencyCode);
-        var quotes = await _repository.GetQuotesAsync(cryptoCurrencySymbol, cancellationToken);
+        var quotes = await _factory.GetInstance().GetQuotesAsync(cryptoCurrencySymbol, cancellationToken);
         return quotes ?? new CryptoCurrencyQuote(cryptocurrencyCode, Enumerable.Empty<Quote>());
     }
 }
