@@ -5,15 +5,15 @@ namespace Exchange.Api.Modules.Metadata.Endpoints;
 
 public class GetMetadataUseCase : IGetMetadataUseCase
 {
-    private readonly IExchangeRepository _repository;
+    private readonly IExchangeFactory _factory;
     
-    public GetMetadataUseCase(IExchangeRepository repository)
+    public GetMetadataUseCase(IExchangeFactory factory)
     {
-        _repository = repository;
+        _factory = factory;
     }
 
     public async Task<Core.Metadata?> Handle(string cryptocurrencyCode, CancellationToken cancellationToken = default)
     {
-        return await _repository.GetMetadataAsync(new CryptoCurrencySymbol(cryptocurrencyCode), cancellationToken);
+        return await _factory.GetInstance().GetMetadataAsync(new CryptoCurrencySymbol(cryptocurrencyCode), cancellationToken);
     }
 }
