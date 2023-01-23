@@ -3,6 +3,7 @@ using Exchange.Api.Middlewares;
 using Exchange.Api.Modules.Metadata.Endpoints;
 using Exchange.Api.Modules.Quotes.Endpoints;
 using Exchange.Core.Ports;
+using Exchange.Infrastructure;
 using Exchange.Infrastructure.Adapters;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.AspNetCore.TestHost;
@@ -18,8 +19,9 @@ public class DependencyTests
             (typeof(ExceptionHandlingMiddleware), typeof(ExceptionHandlingMiddleware), ServiceLifetime.Transient),
             (typeof(IGetMetadataUseCase), typeof(GetMetadataUseCase), ServiceLifetime.Scoped),
             (typeof(IGetQuotesUseCase), typeof(GetQuotesUseCase), ServiceLifetime.Scoped),
-            (typeof(ExchangeRatesRepository), typeof(ExchangeRatesRepository), ServiceLifetime.Scoped),
-            (typeof(CoinMarketCapRepository), typeof(CoinMarketCapRepository), ServiceLifetime.Scoped)
+            (typeof(IExchangeRepository), typeof(ExchangeRatesRepository), ServiceLifetime.Scoped),
+            (typeof(IExchangeRepository), typeof(CoinMarketCapRepository), ServiceLifetime.Scoped),
+            (typeof(IExchangeFactory), typeof(ExchangeFactory), ServiceLifetime.Scoped)
         };
 
     [Fact]
