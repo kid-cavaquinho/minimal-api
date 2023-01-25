@@ -33,7 +33,6 @@ public sealed class CoinMarketCapRepository : HttpService, IExchangeRepository
         if (coinMarketCapCryptoCurrencyId is null)
             return new CryptoCurrencyQuote(cryptoCurrencySymbol.Value, Enumerable.Empty<Quote>());
 
-        // Todo: Move this to domain
         var coinMarketCapCurrencies = new[] 
         { 
             CoinMarketCapCurrencyId.Aud,
@@ -64,7 +63,6 @@ public sealed class CoinMarketCapRepository : HttpService, IExchangeRepository
     
     private async Task<int?> GetCurrencyId(CryptoCurrencySymbol cryptoCurrencySymbol, CancellationToken cancellationToken = default)
     {
-        var response = await GetMetadataAsync(cryptoCurrencySymbol, cancellationToken);
-        return response?.Id;
+        return (await GetMetadataAsync(cryptoCurrencySymbol, cancellationToken))?.Id;
     }
 }
