@@ -2,13 +2,15 @@ minimal-api
 =================
 
 ## Introduction
-Minimal APIs are a simplified approach for building fast HTTP services with minimal code and configurations.
+[Minimal APIs] are a simplified approach for building fast HTTP services with minimal code and configurations.
 
 This sample project demonstrates:
-* A domain-modeled project structure. Each module expresses what it does and what it needs. (Inspired by the carter project and ports and adapters architecture).
+* A domain-modeled project structure. Each module expresses what it does and what it needs. (Inspired by the [carter] project and [ports and adapters] architecture).
 * Techniques you can use for integration testing.
 
 [minimal APIs]: https://devblogs.microsoft.com/aspnet/asp-net-core-updates-in-net-6-preview-4/#introducing-minimal-apis
+[carter]: https://github.com/CarterCommunity/Carter
+[ports and adapters]: https://jmgarridopaz.github.io/content/hexagonalarchitecture.html
 
 These endpoints rely on two data sources: 
 * [CoinMarketCap]
