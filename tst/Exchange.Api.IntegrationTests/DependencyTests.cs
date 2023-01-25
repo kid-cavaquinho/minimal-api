@@ -15,7 +15,6 @@ public class DependencyTests
 {
     private readonly List<(Type ServiceType, Type? ImplType, ServiceLifetime ServiceLifeTime)> _descriptors = new()
         {
-            (typeof(ExceptionHandlingMiddleware), typeof(ExceptionHandlingMiddleware), ServiceLifetime.Transient),
             (typeof(IGetMetadataUseCase), typeof(GetMetadataUseCase), ServiceLifetime.Scoped),
             (typeof(IGetQuotesUseCase), typeof(GetQuotesUseCase), ServiceLifetime.Scoped),
             (typeof(ExchangeRatesRepository), typeof(ExchangeRatesRepository), ServiceLifetime.Scoped),
