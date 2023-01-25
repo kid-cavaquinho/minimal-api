@@ -1,6 +1,5 @@
 ﻿using System.Net;
 using System.Net.Mime;
-using Exchange.Api.Middlewares;
 using Exchange.Api.Modules;
 using Exchange.Core;
 using Exchange.Core.Options;
@@ -100,10 +99,5 @@ public static class ServiceCollectionExtensions
                 }
             });
         });
-    }
-
-    internal static void AddMiddleware(this IServiceCollection services)
-    {
-        services.AddTransient<ExceptionHandlingMiddleware>();
     }
 }
