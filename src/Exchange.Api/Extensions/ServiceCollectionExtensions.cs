@@ -96,7 +96,6 @@ public static class ServiceCollectionExtensions
                 Contact = new OpenApiContact
                 {
                     Name = "João A.",
-                    Email = "joao.antao@protonmail.com",
                     Url = new Uri("https://antao.github.io")
                 }
             });
