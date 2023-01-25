@@ -18,8 +18,8 @@ public class DependencyTests
             (typeof(ExceptionHandlingMiddleware), typeof(ExceptionHandlingMiddleware), ServiceLifetime.Transient),
             (typeof(IGetMetadataUseCase), typeof(GetMetadataUseCase), ServiceLifetime.Scoped),
             (typeof(IGetQuotesUseCase), typeof(GetQuotesUseCase), ServiceLifetime.Scoped),
-            (typeof(IExchangeRepository), typeof(ExchangeRatesRepository), ServiceLifetime.Scoped),
-            (typeof(IExchangeRepository), typeof(CoinMarketCapRepository), ServiceLifetime.Scoped)
+            (typeof(ExchangeRatesRepository), typeof(ExchangeRatesRepository), ServiceLifetime.Scoped),
+            (typeof(CoinMarketCapRepository), typeof(CoinMarketCapRepository), ServiceLifetime.Scoped)
         };
 
     [Fact]

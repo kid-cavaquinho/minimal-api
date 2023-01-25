@@ -32,8 +32,8 @@ public static class ServiceCollectionExtensions
                 options => options.ErrorOnUnknownConfiguration = true)
             .ValidateOnStart();
         
-        services.AddScoped<IExchangeRepository, ExchangeRatesRepository>();
-        services.AddScoped<IExchangeRepository, CoinMarketCapRepository>();
+        services.AddScoped<ExchangeRatesRepository>();
+        services.AddScoped<CoinMarketCapRepository>();
         
         services.AddOptions<CoinMarketCapApiOptions>().BindConfiguration(nameof(CoinMarketCapApiOptions),
                 options => options.ErrorOnUnknownConfiguration = true)
