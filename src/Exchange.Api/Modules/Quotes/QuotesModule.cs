@@ -1,5 +1,4 @@
 ﻿using System.Net.Mime;
-using Asp.Versioning.Builder;
 using Exchange.Api.Modules.Quotes.Endpoints;
 using Exchange.Core;
 using Exchange.Core.Ports;
@@ -14,7 +13,7 @@ internal sealed class QuotesModule : IModule
         services.AddScoped<IGetQuotesUseCase, GetQuotesUseCase>();
     }
 
-    public void MapEndpoints(IEndpointRouteBuilder app, ApiVersionSet apiVersionSet)
+    public void MapEndpoints(IEndpointRouteBuilder app)
     {
          app.MapGet("quotes/{cryptocurrencySymbol:required}", async ([FromRoute] string cryptocurrencySymbol,
                  [FromServices] IGetQuotesUseCase useCase,

@@ -35,7 +35,7 @@ public static class WebApplicationBuilderExtensions
         
         foreach (var module in modules)
         {
-            module.MapEndpoints(app, apiVersionSet);
+            module.MapEndpoints(app);
         }
     }
 }
