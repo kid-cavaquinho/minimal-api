@@ -28,9 +28,9 @@ public class QuotesEndpointTests
         using var client = factory.CreateClient();
         var response = await client.GetAsync("/quotes/tst");
         response.StatusCode.Should().Be(HttpStatusCode.OK);
-        var result = await response.Content.ReadFromJsonAsync<CryptoCurrencyQuote>();
+        var result = await response.Content.ReadFromJsonAsync<CryptocurrencyQuote>();
         result.Should().NotBeNull();
-        result!.CryptoCurrencyCode.Should().Be("TST");
+        result!.CryptocurrencySymbol.Should().Be("TST");
         result!.Quotes.Should().HaveCount(5);
     }
 }

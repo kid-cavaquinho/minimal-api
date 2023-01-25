@@ -2,5 +2,5 @@
 
 public interface IGetQuotesUseCase
 {
-    Task<CryptoCurrencyQuote> Handle(string cryptoCurrencyCode, CancellationToken cancellationToken);
+    Task<CryptocurrencyQuote> Handle(string cryptoCurrencyCode, CancellationToken cancellationToken);
 }

@@ -12,10 +12,9 @@ public sealed class GetQuotesUseCase : IGetQuotesUseCase
         _repository = repository;
     }
 
-    public async Task<CryptoCurrencyQuote> Handle(string cryptocurrencyCode, CancellationToken cancellationToken)
+    public async Task<CryptocurrencyQuote> Handle(string cryptocurrencySymbol, CancellationToken cancellationToken)
     {
-        var cryptoCurrencySymbol = new CryptoCurrencySymbol(cryptocurrencyCode);
-        var quotes = await _repository.GetQuotesAsync(cryptoCurrencySymbol, cancellationToken);
-        return quotes ?? new CryptoCurrencyQuote(cryptocurrencyCode, Enumerable.Empty<Quote>());
+        var quotes = await _repository.GetQuotesAsync(cryptocurrencySymbol, cancellationToken);
+        return quotes ?? new CryptocurrencyQuote(cryptocurrencySymbol, Enumerable.Empty<Quote>());
     }
 }

@@ -1,16 +1,17 @@
-﻿using Exchange.Core;
+﻿using Exchange.Api.Modules.Metadata.Core;
+using Exchange.Core;
 using Exchange.Core.Ports;
 
 namespace Exchange.Api.IntegrationTests.Stubs;
 
 internal class TestRepository : IExchangeRepository
 {
-    public Task<Metadata?> GetMetadataAsync(CryptoCurrencySymbol currencySymbol, CancellationToken cancellationToken = default)
+    public Task<CryptocurrencyMetadata?> GetMetadataAsync(string cryptocurrencySymbol, CancellationToken cancellationToken = default)
     {
         throw new NotImplementedException();
     }
 
-    public async Task<CryptoCurrencyQuote?> GetQuotesAsync(CryptoCurrencySymbol cryptoCurrencySymbol, CancellationToken cancellationToken = default)
+    public async Task<CryptocurrencyQuote?> GetQuotesAsync(string cryptocurrencySymbol, CancellationToken cancellationToken = default)
     {
         var fakeQuotes = new List<Quote>
         {
@@ -21,6 +22,6 @@ internal class TestRepository : IExchangeRepository
             new("AUD", 8),
         };
             
-        return await Task.FromResult(new CryptoCurrencyQuote("TST", fakeQuotes));
+        return await Task.FromResult(new CryptocurrencyQuote("TST", fakeQuotes));
     }
 }

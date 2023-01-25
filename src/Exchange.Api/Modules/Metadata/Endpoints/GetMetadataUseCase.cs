@@ -1,4 +1,4 @@
-﻿using Exchange.Core;
+﻿using Exchange.Api.Modules.Metadata.Core;
 using Exchange.Core.Ports;
 
 namespace Exchange.Api.Modules.Metadata.Endpoints;
@@ -12,8 +12,8 @@ public class GetMetadataUseCase : IGetMetadataUseCase
         _repository = repository;
     }
 
-    public async Task<Core.Metadata?> Handle(string cryptocurrencyCode, CancellationToken cancellationToken = default)
+    public async Task<CryptocurrencyMetadata?> Handle(string cryptoCurrencySymbol, CancellationToken cancellationToken = default)
     {
-        return await _repository.GetMetadataAsync(new CryptoCurrencySymbol(cryptocurrencyCode), cancellationToken);
+        return await _repository.GetMetadataAsync(cryptoCurrencySymbol, cancellationToken);
     }
 }

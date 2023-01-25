@@ -1,3 +1,3 @@
 ﻿namespace Exchange.Core;
 
-public sealed record Quote(string CurrencyCode, decimal? Price);
+public sealed record Quote(string Symbol, decimal? Price);

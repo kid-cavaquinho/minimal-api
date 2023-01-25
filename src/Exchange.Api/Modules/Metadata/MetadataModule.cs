@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using Asp.Versioning.Builder;
+using Exchange.Api.Modules.Metadata.Core;
 using Exchange.Api.Modules.Metadata.Endpoints;
 using Exchange.Core.Ports;
 using Microsoft.AspNetCore.Mvc;
@@ -15,10 +16,10 @@ public sealed class MetadataModule : IModule
 
     public void MapEndpoints(IEndpointRouteBuilder endpoints, ApiVersionSet apiVersionSet)
     {
-        endpoints.MapGet("metadata/{cryptocurrencyCode:required}", async Task<Core.Metadata?>
-             ([Required] [FromRoute] string cryptocurrencyCode, 
+        endpoints.MapGet("metadata/{cryptocurrencySymbol:required}", async Task<CryptocurrencyMetadata?>
+             ([Required] [FromRoute] string cryptocurrencySymbol, 
                  [FromServices] IGetMetadataUseCase useCase,
-                 CancellationToken cancellationToken) => await useCase.Handle(cryptocurrencyCode, cancellationToken))
+                 CancellationToken cancellationToken) => await useCase.Handle(cryptocurrencySymbol, cancellationToken))
              .WithTags("Metadata")
              .WithName("Metadata")
              .WithOpenApi(operation => new(operation)

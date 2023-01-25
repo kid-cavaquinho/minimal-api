@@ -2,7 +2,7 @@
 using System.Text.Json;
 using Microsoft.Extensions.Logging;
 
-namespace Exchange.Infrastructure.Services;
+namespace Exchange.Infrastructure.Adapters;
 
 public abstract class HttpService
 {

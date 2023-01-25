@@ -1,7 +1,7 @@
-﻿using Exchange.Core;
+﻿using Exchange.Api.Modules.Metadata.Core;
+using Exchange.Core;
 using Exchange.Core.Ports;
 using Exchange.Core.Ports.DTOs;
-using Exchange.Infrastructure.Services;
 using Microsoft.Extensions.Logging;
 
 namespace Exchange.Infrastructure.Adapters;
@@ -12,17 +12,17 @@ public sealed class ExchangeRatesRepository : HttpService, IExchangeRepository
     {
     }
     
-    public async Task<CryptoCurrencyQuote?> GetQuotesAsync(CryptoCurrencySymbol cryptoCurrencySymbol, CancellationToken cancellationToken = default)
+    public async Task<CryptocurrencyQuote?> GetQuotesAsync(string cryptocurrencySymbol, CancellationToken cancellationToken = default)
     {
-        var requestUri = $"exchangerates_data/latest?symbols={string.Join(",", (Currency[]) Enum.GetValues(typeof(Currency)))}&base={cryptoCurrencySymbol.Value}";
+        var requestUri = $"exchangerates_data/latest?symbols={string.Join(",", (Currency[]) Enum.GetValues(typeof(Currency)))}&base={cryptocurrencySymbol}";
         var response = await SendAsync<ExchangeRateLatestQuotes>(new HttpRequestMessage(HttpMethod.Get, requestUri), cancellationToken);
         if (response?.Rates is null || !response.Rates.Any())
-            return new CryptoCurrencyQuote(cryptoCurrencySymbol.Value.ToUpperInvariant(), Enumerable.Empty<Quote>());
+            return new CryptocurrencyQuote(cryptocurrencySymbol.ToUpperInvariant(), Enumerable.Empty<Quote>());
 
-        return new CryptoCurrencyQuote(cryptoCurrencySymbol.Value.ToUpperInvariant(), response.Rates.Select(r => new Quote(r.Key, r.Value)));
+        return new CryptocurrencyQuote(cryptocurrencySymbol.ToUpperInvariant(), response.Rates.Select(r => new Quote(r.Key, r.Value)));
     }
 
-    public Task<Metadata?> GetMetadataAsync(CryptoCurrencySymbol cryptoCurrencySymbol, CancellationToken cancellationToken = default)
+    public Task<CryptocurrencyMetadata?> GetMetadataAsync(string cryptoCurrencySymbol, CancellationToken cancellationToken = default)
     {
         throw new NotImplementedException();
     }

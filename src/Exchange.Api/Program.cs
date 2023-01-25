@@ -1,6 +1,5 @@
 using Exchange.Api.Extensions;
 using Exchange.Api.Middlewares;
-using Serilog;
 
 var builder = WebApplication.CreateBuilder(args).UseSerilog();
 

@@ -2,12 +2,11 @@ minimal-api
 =================
 
 ## Introduction
+Minimal APIs are a simplified approach for building fast HTTP services with minimal code and configurations.
 
-This sample project is build using the [minimal APIs] feature approach and demonstrates:
-* A project structure for your application. 
-* Techniques you can use for integration testing an ASP.NET Core 7 web application.
-
-Minimal APIs are a simplified approach for building fast HTTP APIs with ASP.NET Core. You can build fully functioning REST endpoints with minimal code and configuration.
+This sample project demonstrates:
+* A domain-modeled project structure. Each module expresses what it does and what it needs. (Inspired by the carter project and ports and adapters architecture).
+* Techniques you can use for integration testing.
 
 [minimal APIs]: https://devblogs.microsoft.com/aspnet/asp-net-core-updates-in-net-6-preview-4/#introducing-minimal-apis
 
@@ -45,5 +44,5 @@ This solution can be dockerized, install a suitable version of docker for your c
 
 ```
 docker build --tag "exchange-api" --file "Dockerfile" .
-docker run -p 8080:80 --rm --detach --name joao-assignment exchange-api 
+docker run -p 8080:80 --rm --detach --name joao exchange-api 
 ```

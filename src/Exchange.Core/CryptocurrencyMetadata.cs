@@ -1,8 +1,8 @@
-﻿namespace Exchange.Core;
+﻿namespace Exchange.Api.Modules.Metadata.Core;
 
-public sealed class Metadata
+public sealed class CryptocurrencyMetadata
 {
-    public Metadata(int id, string symbol, string description)
+    public CryptocurrencyMetadata(int id, string symbol, string description)
     {
         Id = id;
         Symbol = symbol;
