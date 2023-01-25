@@ -1,5 +1,4 @@
 ﻿using System.Text;
-using Exchange.Api.Middlewares;
 using Exchange.Api.Modules.Metadata.Endpoints;
 using Exchange.Api.Modules.Quotes.Endpoints;
 using Exchange.Core.Ports;
