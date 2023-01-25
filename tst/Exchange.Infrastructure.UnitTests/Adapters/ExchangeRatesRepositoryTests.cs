@@ -19,6 +19,6 @@ public class ExchangeRatesRepositoryTests
     [Fact]
     public async Task GetMetadataAsync_Should_Throw_NotImplementedException()
     {
-        await Assert.ThrowsAsync<NotImplementedException>(async () => await _sut.GetMetadataAsync(It.IsAny<CryptoCurrencySymbol>(), It.IsAny<CancellationToken>()));
+        await Assert.ThrowsAsync<NotImplementedException>(async () => await _sut.GetMetadataAsync(It.IsAny<string>(), It.IsAny<CancellationToken>()));
     }
 }
