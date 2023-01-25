@@ -1,10 +1,8 @@
 using Exchange.Api.Extensions;
-using Exchange.Api.Middlewares;
 
 var builder = WebApplication.CreateBuilder(args).UseSerilog();
 
 builder.Services.AddSwagger();
-builder.Services.AddMiddleware();
 builder.Services.AddKernel();
 builder.Services.AddModules();
 
@@ -19,7 +17,8 @@ if (app.Environment.IsDevelopment())
     });
 }
 
-app.UseMiddleware<ExceptionHandlingMiddleware>();
+app.UseExceptionHandler(exceptionHandlerApp => exceptionHandlerApp.Run(async context => await Results.Problem().ExecuteAsync(context)));
+
 app.MapEndpoints();
 
 await app.RunAsync(app.Lifetime.ApplicationStopped);
