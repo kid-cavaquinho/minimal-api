@@ -1,6 +1,6 @@
 ﻿namespace Exchange.Core;
 
-public enum Currency
+public enum CurrencySymbol
 {
     Usd,
     Aud,

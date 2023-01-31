@@ -1,5 +1,4 @@
-﻿using Exchange.Core;
-using Exchange.Infrastructure.Adapters;
+﻿using Exchange.Infrastructure.Adapters;
 using Microsoft.Extensions.Logging.Abstractions;
 using Moq;
 using Xunit;

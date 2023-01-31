@@ -12,9 +12,9 @@ public sealed class ExchangeRatesRepository : HttpService, IExchangeRepository
     {
     }
     
-    public async Task<CryptocurrencyQuote?> GetQuotesAsync(string cryptocurrencySymbol, CancellationToken cancellationToken = default)
+    public async Task<CryptocurrencyQuote?> GetQuotesAsync(string cryptocurrencySymbol, string[] currencySymbols, CancellationToken cancellationToken = default)
     {
-        var requestUri = $"exchangerates_data/latest?symbols={string.Join(",", (Currency[]) Enum.GetValues(typeof(Currency)))}&base={cryptocurrencySymbol}";
+        var requestUri = $"exchangerates_data/latest?symbols={string.Join(",", currencySymbols)}&base={cryptocurrencySymbol}";
         var response = await SendAsync<ExchangeRateLatestQuotes>(new HttpRequestMessage(HttpMethod.Get, requestUri), cancellationToken);
         if (response?.Rates is null || !response.Rates.Any())
             return new CryptocurrencyQuote(cryptocurrencySymbol.ToUpperInvariant(), Enumerable.Empty<Quote>());

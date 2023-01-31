@@ -11,7 +11,7 @@ internal class TestRepository : IExchangeRepository
         throw new NotImplementedException();
     }
 
-    public async Task<CryptocurrencyQuote?> GetQuotesAsync(string cryptocurrencySymbol, CancellationToken cancellationToken = default)
+    public async Task<CryptocurrencyQuote?> GetQuotesAsync(string cryptocurrencySymbol, string[] currencySymbols, CancellationToken cancellationToken = default)
     {
         var fakeQuotes = new List<Quote>
         {
