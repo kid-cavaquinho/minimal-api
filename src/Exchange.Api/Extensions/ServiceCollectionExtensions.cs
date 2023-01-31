@@ -67,6 +67,11 @@ public static class ServiceCollectionExtensions
         {
             AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate
         });
+        
+        services.AddOutputCache(options =>
+        {
+            options.AddBasePolicy(outputCachePolicyBuilder => outputCachePolicyBuilder.Expire(TimeSpan.FromSeconds(30)));
+        });
     }
 
     internal static void AddModules(this IServiceCollection services)

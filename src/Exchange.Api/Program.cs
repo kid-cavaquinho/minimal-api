@@ -19,6 +19,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseExceptionHandler(exceptionHandlerApp => exceptionHandlerApp.Run(async context => await Results.Problem().ExecuteAsync(context)));
 app.MapEndpoints();
+app.UseOutputCache();
 
 await app.RunAsync(app.Lifetime.ApplicationStopped);
 

@@ -16,14 +16,15 @@ public sealed class MetadataModule : IModule
     public void MapEndpoints(IEndpointRouteBuilder endpoints)
     {
         endpoints.MapGet("metadata/{cryptocurrencySymbol:required}", async Task<CryptocurrencyMetadata?>
-             ([Required] [FromRoute] string cryptocurrencySymbol, 
-                 [FromServices] IGetMetadataUseCase useCase,
-                 CancellationToken cancellationToken) => await useCase.Handle(cryptocurrencySymbol, cancellationToken))
-             .WithTags("Metadata")
-             .WithName("Metadata")
-             .WithOpenApi(operation => new(operation)
-             {
-                 Summary = "Returns static metadata available for a cryptocurrency, this information includes details like description, symbol and id"
-             });
+            ([Required] [FromRoute] string cryptocurrencySymbol,
+                [FromServices] IGetMetadataUseCase useCase,
+                CancellationToken cancellationToken) => await useCase.Handle(cryptocurrencySymbol, cancellationToken))
+            .CacheOutput()
+            .WithTags("Metadata")
+            .WithName("Metadata")
+            .WithOpenApi(operation => new(operation)
+            {
+                Summary = "Returns static metadata available for a cryptocurrency, this information includes details like description, symbol and id"
+            });
     }
 }
