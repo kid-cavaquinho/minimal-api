@@ -24,8 +24,7 @@ internal sealed class QuotesModule : IModule
             .WithName("Quotes")
             .WithOpenApi(operation => new(operation)
             {
-                Summary =
-                    "Returns the latest quotes in a submitted cryptocurrency code for USD, EUR, BRL, GBP and AUD currencies"
+                Summary = "Returns the latest quotes in a submitted cryptocurrency code for USD, EUR, BRL, GBP and AUD currencies"
             })
             .Produces(StatusCodes.Status200OK, typeof(CryptocurrencyQuote), MediaTypeNames.Application.Json);
     }
