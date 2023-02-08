@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using Exchange.Api.Modules.Metadata.Core;
-using Exchange.Api.Modules.Metadata.Endpoints;
+using Exchange.Core;
 using Exchange.Core.Ports;
+using Exchange.Core.UseCases.Metadata;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Exchange.Api.Modules.Metadata;

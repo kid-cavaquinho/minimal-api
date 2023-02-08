@@ -1,7 +1,7 @@
 ﻿using System.Net.Mime;
-using Exchange.Api.Modules.Quotes.Endpoints;
 using Exchange.Core;
 using Exchange.Core.Ports;
+using Exchange.Core.UseCases.Quotes;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Exchange.Api.Modules.Quotes;

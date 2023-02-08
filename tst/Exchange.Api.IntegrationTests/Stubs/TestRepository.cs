@@ -1,5 +1,4 @@
-﻿using Exchange.Api.Modules.Metadata.Core;
-using Exchange.Core;
+﻿using Exchange.Core;
 using Exchange.Core.Ports;
 
 namespace Exchange.Api.IntegrationTests.Stubs;

@@ -1,6 +1,4 @@
-﻿using Exchange.Api.Modules.Metadata.Core;
-
-namespace Exchange.Core.Ports;
+﻿namespace Exchange.Core.Ports;
 
 public interface IExchangeRepository
 {

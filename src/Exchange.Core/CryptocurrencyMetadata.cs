@@ -1,4 +1,4 @@
-﻿namespace Exchange.Api.Modules.Metadata.Core;
+﻿namespace Exchange.Core;
 
 public sealed class CryptocurrencyMetadata
 {

@@ -1,5 +1,4 @@
-﻿using Exchange.Api.Modules.Metadata.Core;
-using Exchange.Core;
+﻿using Exchange.Core;
 using Exchange.Core.Ports;
 using Exchange.Core.Ports.DTOs;
 using Microsoft.Extensions.Logging;

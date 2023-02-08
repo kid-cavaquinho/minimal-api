@@ -1,7 +1,6 @@
-﻿using Exchange.Core;
-using Exchange.Core.Ports;
+﻿using Exchange.Core.Ports;
 
-namespace Exchange.Api.Modules.Quotes.Endpoints;
+namespace Exchange.Core.UseCases.Quotes;
 
 public sealed class GetQuotesUseCase : IGetQuotesUseCase
 {

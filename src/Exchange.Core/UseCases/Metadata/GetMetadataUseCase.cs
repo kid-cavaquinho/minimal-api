@@ -1,7 +1,6 @@
-﻿using Exchange.Api.Modules.Metadata.Core;
-using Exchange.Core.Ports;
+﻿using Exchange.Core.Ports;
 
-namespace Exchange.Api.Modules.Metadata.Endpoints;
+namespace Exchange.Core.UseCases.Metadata;
 
 public class GetMetadataUseCase : IGetMetadataUseCase
 {

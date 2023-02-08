@@ -1,7 +1,7 @@
 ﻿using System.Text;
-using Exchange.Api.Modules.Metadata.Endpoints;
-using Exchange.Api.Modules.Quotes.Endpoints;
 using Exchange.Core.Ports;
+using Exchange.Core.UseCases.Metadata;
+using Exchange.Core.UseCases.Quotes;
 using Exchange.Infrastructure.Adapters;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.AspNetCore.TestHost;
