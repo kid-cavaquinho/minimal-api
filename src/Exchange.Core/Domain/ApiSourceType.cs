@@ -1,4 +1,4 @@
-﻿namespace Exchange.Core;
+﻿namespace Exchange.Core.Domain;
 
 public enum ApiSourceType
 {

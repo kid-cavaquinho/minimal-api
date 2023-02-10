@@ -1,4 +1,4 @@
-﻿namespace Exchange.Core.Ports;
+﻿namespace Exchange.Core.Interfaces.Services;
 
 public interface IHttpService
 {

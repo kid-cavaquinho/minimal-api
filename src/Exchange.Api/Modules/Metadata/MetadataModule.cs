@@ -1,12 +1,12 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using Exchange.Core;
-using Exchange.Core.Ports;
+using Exchange.Core.Interfaces.UseCases;
 using Exchange.Core.UseCases.Metadata;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Exchange.Api.Modules.Metadata;
 
-public sealed class MetadataModule : IModule
+internal sealed class MetadataModule : IModule
 {
     public void AddModule(IServiceCollection services)
     {

@@ -1,6 +1,6 @@
 ﻿using System.Net.Mime;
 using Exchange.Core;
-using Exchange.Core.Ports;
+using Exchange.Core.Interfaces.UseCases;
 using Exchange.Core.UseCases.Quotes;
 using Microsoft.AspNetCore.Mvc;
 

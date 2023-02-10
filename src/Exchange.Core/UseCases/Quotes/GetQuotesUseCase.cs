@@ -1,4 +1,7 @@
-﻿using Exchange.Core.Ports;
+﻿using Exchange.Core.Interfaces;
+using Exchange.Core.Interfaces.Repositories;
+using Exchange.Core.Interfaces.UseCases;
+using Exchange.Core.Ports;
 
 namespace Exchange.Core.UseCases.Quotes;
 

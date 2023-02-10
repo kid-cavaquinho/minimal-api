@@ -1,7 +1,8 @@
 ﻿using System.Text.Json.Nodes;
 using System.Text.Json.Serialization;
+using Exchange.Core.Ports.DTOs;
 
-namespace Exchange.Core.Ports.DTOs;
+namespace Exchange.Core.Dtos;
 
 public sealed class CoinMarketCapLatestQuotes
 {

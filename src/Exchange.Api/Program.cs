@@ -1,9 +1,11 @@
 using Exchange.Api.Extensions;
+using Exchange.Infrastructure.Extensions; // Should not be referenced anywhere else
 
 var builder = WebApplication.CreateBuilder(args).UseSerilog();
 
+builder.Services.AddCache();
 builder.Services.AddSwagger();
-builder.Services.AddKernel();
+builder.Services.AddInfrastructure();
 builder.Services.AddModules();
 
 var app = builder.Build();

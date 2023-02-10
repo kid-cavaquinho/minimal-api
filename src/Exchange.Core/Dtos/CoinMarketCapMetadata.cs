@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace Exchange.Core.Ports.DTOs;
+namespace Exchange.Core.Dtos;
 
 public sealed record CoinMarketCapMetadata
 {

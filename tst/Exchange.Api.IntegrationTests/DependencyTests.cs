@@ -1,8 +1,10 @@
 ﻿using System.Text;
+using Exchange.Core.Interfaces;
+using Exchange.Core.Interfaces.UseCases;
 using Exchange.Core.Ports;
 using Exchange.Core.UseCases.Metadata;
 using Exchange.Core.UseCases.Quotes;
-using Exchange.Infrastructure.Adapters;
+using Exchange.Infrastructure.Repositories;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.DependencyInjection;

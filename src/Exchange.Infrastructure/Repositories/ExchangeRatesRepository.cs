@@ -1,9 +1,10 @@
 ﻿using Exchange.Core;
-using Exchange.Core.Ports;
-using Exchange.Core.Ports.DTOs;
+using Exchange.Core.Dtos;
+using Exchange.Core.Interfaces.Repositories;
+using Exchange.Infrastructure.Services;
 using Microsoft.Extensions.Logging;
 
-namespace Exchange.Infrastructure.Adapters;
+namespace Exchange.Infrastructure.Repositories;
 
 public sealed class ExchangeRatesRepository : HttpService, IExchangeRepository
 {

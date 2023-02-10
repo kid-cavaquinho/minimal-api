@@ -1,4 +1,6 @@
 ﻿using Exchange.Core;
+using Exchange.Core.Interfaces;
+using Exchange.Core.Interfaces.Repositories;
 using Exchange.Core.Ports;
 
 namespace Exchange.Api.IntegrationTests.Stubs;
