@@ -1,6 +1,6 @@
-﻿namespace Exchange.Core.Options;
+﻿namespace Exchange.Infrastructure.Options;
 
-public class ExchangeRatesApiOptions
+internal sealed class ExchangeRatesApiOptions
 {
     public required Uri BaseAddress { get; set; }
 

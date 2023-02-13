@@ -1,8 +1,7 @@
 ﻿using System.Net;
 using System.Net.Mime;
-using Exchange.Core.Domain;
 using Exchange.Core.Interfaces.Repositories;
-using Exchange.Core.Options;
+using Exchange.Infrastructure.Options;
 using Exchange.Infrastructure.Repositories;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;

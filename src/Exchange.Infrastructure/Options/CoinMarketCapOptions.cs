@@ -1,6 +1,6 @@
-﻿namespace Exchange.Core.Options;
+﻿namespace Exchange.Infrastructure.Options;
 
-public sealed class CoinMarketCapApiOptions
+internal sealed class CoinMarketCapApiOptions
 {
     public required Uri BaseAddress { get; set; }
 

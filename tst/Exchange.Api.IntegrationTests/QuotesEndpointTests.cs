@@ -2,10 +2,10 @@
 using System.Net.Http.Json;
 using Exchange.Api.IntegrationTests.Stubs;
 using Exchange.Core;
-using Exchange.Core.Domain;
 using Exchange.Core.Interfaces;
 using Exchange.Core.Interfaces.Repositories;
 using Exchange.Core.Ports;
+using Exchange.Infrastructure;
 using FluentAssertions;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.AspNetCore.TestHost;
